@@ -1,7 +1,7 @@
 # Redmi Note 12 5G / POCO X5 5G (`stone`)
 
 <div align="center">
-  <img src="assets/stone.png" width="250" />
+  <img src="../assets/stone.png" width="250" />
 </div>
 
 | **Specs** | |
