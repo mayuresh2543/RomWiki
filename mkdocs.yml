@@ -1,0 +1,43 @@
+site_name: Mayuresh's ROMs
+site_url: https://mayuresh2543.github.io/RomWiki/
+theme:
+  name: material
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
+  palette:
+    scheme: slate
+    primary: blue grey
+    accent: light blue
+  features:
+    - toc.integrate
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Getting started: index.md
+  - Devices:
+    - Overview: devices.md
+    - Redmi Note 12 5G / POCO X5 5G (stone): stone.md
+    - Redmi Note 11 (spes): spes.md
+  - Google Apps: gapps.md
+  - Troubleshooting: troubleshooting.md
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tabbed:
+      alternate_style: true
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/marked/marked.min.js
+  - javascripts/custom.js
