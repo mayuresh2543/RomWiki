@@ -1,7 +1,7 @@
 # Redmi Note 11 (`spes`)
 
 <div align="center">
-  <img src="assets/spes.png" width="250" />
+  <img src="../assets/spes.png" width="250" />
 </div>
 
 | **Specs** | |
