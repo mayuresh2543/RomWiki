@@ -1,0 +1,130 @@
+/* Live ROM Card Styles */
+.live-rom-card {
+    background-color: var(--md-default-bg-color);
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    position: relative;
+    overflow: hidden;
+}
+
+.live-rom-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--md-primary-fg-color);
+}
+
+.live-rom-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.live-rom-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--md-default-fg-color);
+    margin: 0;
+}
+
+.live-rom-card-subtitle {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--md-default-fg-color--light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+}
+
+.live-rom-card-info-container {
+    background-color: var(--md-default-fg-color--lightest);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.live-rom-card-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.live-rom-card-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--md-default-fg-color--light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.live-rom-card-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--md-default-fg-color);
+}
+
+.live-rom-card-filename {
+    font-family: var(--md-text-font-family);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--md-default-fg-color);
+    word-break: break-all;
+}
+
+.live-rom-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.shimmer {
+    color: transparent;
+    background: linear-gradient(100deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.5) 50%, rgba(255,255,255,0) 60%) var(--md-default-fg-color--lightest);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: 0.25rem;
+}
+
+[data-md-color-scheme="slate"] .shimmer {
+    background: linear-gradient(100deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.1) 50%, rgba(255,255,255,0) 60%) var(--md-default-bg-color--light);
+    background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
+
+.live-rom-card-loader {
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--md-default-fg-color--lightest);
+    border-bottom-color: var(--md-primary-fg-color);
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dynamic-view-container {
+    margin-top: 1rem;
+    padding: 1.25rem;
+    background-color: var(--md-default-bg-color--light);
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-left: 4px solid var(--md-primary-fg-color);
+    border-radius: 0.2rem;
+    color: var(--md-typeset-color);
+}
