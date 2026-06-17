@@ -2,7 +2,7 @@
 
 ## Recommended Packages
 
-Most of the Custom ROMs provided here either come with GApps pre-installed (like Project Matrixx) or require you to flash them separately.
+Most of the Custom ROMs provided here either come with GApps pre-installed or require you to flash them separately.
 
 If you are downloading a "Vanilla" build (without GApps), we highly recommend using **MindTheGapps**.
 
