@@ -22,9 +22,9 @@
      adb reboot bootloader
      ```
 
-2. **Flash the recovery image**
+2. **Flash the boot image**
    ```bash
-   fastboot flash boot recovery.img
+   fastboot flash boot boot.img
    ```
 
 3. **Reboot into Recovery**
