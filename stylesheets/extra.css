@@ -136,34 +136,28 @@
 /* Expand sidebar width on desktop so long device names fit without wrapping */
 @media screen and (min-width: 60em) {
     .md-sidebar--primary {
-        width: 16.5rem;
+        width: 17rem !important;
     }
 }
 
-.md-nav--primary .md-nav__link {
-    white-space: normal;
-    word-break: keep-all;
+@media screen and (min-width: 76.25em) {
+    .md-sidebar--primary {
+        width: 17rem !important;
+    }
 }
 
-/* Subtle tree guide line for nested sub-lists */
-.md-nav--primary .md-nav__item--nested .md-nav__list {
-    border-left: 1px solid var(--md-default-fg-color--lightest);
-    margin-left: 0.65rem;
-    padding-left: 0.25rem;
-}
-
-/* Sub-item links */
-.md-nav--primary .md-nav__item--nested .md-nav__list .md-nav__link {
+/* Level 2 sub-items (Device Info, Downloads, Installation) only - NO lines */
+.md-nav[data-md-level="2"] .md-nav__link {
     position: relative;
-    padding-left: 1.3rem;
+    padding-left: 1.25rem !important;
     font-size: 0.78rem;
 }
 
 /* Inactive sub-item: Unfilled circle symbol (○) */
-.md-nav--primary .md-nav__item--nested .md-nav__list .md-nav__link::before {
+.md-nav[data-md-level="2"] .md-nav__link::before {
     content: '○';
     position: absolute;
-    left: 0.25rem;
+    left: 0.2rem;
     font-size: 0.65rem;
     line-height: 1.9;
     color: var(--md-default-fg-color--light);
@@ -172,7 +166,7 @@
 }
 
 /* Active sub-item: Filled circle symbol (●) */
-.md-nav--primary .md-nav__item--nested .md-nav__list .md-nav__link--active::before {
+.md-nav[data-md-level="2"] .md-nav__link--active::before {
     content: '●';
     color: var(--md-accent-fg-color);
     opacity: 1;
@@ -180,7 +174,7 @@
 }
 
 /* Hover on sub-item */
-.md-nav--primary .md-nav__item--nested .md-nav__list .md-nav__link:hover::before {
+.md-nav[data-md-level="2"] .md-nav__link:hover::before {
     color: var(--md-accent-fg-color);
     opacity: 1;
 }
