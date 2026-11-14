@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const href = link.href;
         if (!href || !href.includes('raw.githubusercontent.com')) return;
         
-        // Skip links that are inside our new live cards
+        // Skip links that are inside our live cards
         if (link.closest('.live-rom-card')) return;
 
         link.addEventListener('click', async (e) => {
@@ -24,22 +24,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 if (href.endsWith('.json')) {
                     const data = await response.json();
-                    const build = data.response[0];
-                    const rawSize = build.size || (build.payload && build.payload[0] ? build.payload[0].FILE_SIZE : null);
-                    const sizeMB = rawSize ? (rawSize / (1024 * 1024)).toFixed(2) : "Unknown";
-                    let version = build.version;
-                    if (!version && build.filename && build.filename.toUpperCase().includes('YAAP')) {
-                        const parts = build.filename.split('-');
-                        if (parts.length > 1) version = parts[1];
+                    const build = (data.response && Array.isArray(data.response)) ? data.response[0] : (Array.isArray(data) ? data[0] : data);
+                    const fileInfo = (build.files && Array.isArray(build.files) && build.files[0]) ? build.files[0] : build;
+
+                    const rawSize = fileInfo.size || (build.payload && build.payload[0] ? build.payload[0].FILE_SIZE : null);
+                    const sizeMB = rawSize ? (Number(rawSize) / (1024 * 1024)).toFixed(2) : "Unknown";
+                    
+                    let version = build.version || fileInfo.version;
+                    if (!version && fileInfo.filename) {
+                        if (fileInfo.filename.toUpperCase().includes('YAAP')) {
+                            const parts = fileInfo.filename.split('-');
+                            if (parts.length > 1) version = parts[1];
+                        } else if (fileInfo.filename.includes('lineage-')) {
+                            const match = fileInfo.filename.match(/lineage-([0-9.]+)-/);
+                            if (match) version = match[1];
+                        }
                     }
                     version = version || "N/A";
-                    const downloadUrl = build.url || `https://github.com/mayuresh-releases/YAAP_stone/releases/latest/download/${build.filename}`;
+                    const downloadUrl = fileInfo.url || `https://github.com/mayuresh-releases/YAAP_stone/releases/latest/download/${fileInfo.filename}`;
                     viewContainer.innerHTML = `
                         <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                             <strong>Build Information</strong>
                             <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; font-size:1.5em;">&times;</button>
                         </div>
-                        <div><strong>File:</strong> ${build.filename || 'Unknown'}</div>
+                        <div><strong>File:</strong> ${fileInfo.filename || 'Unknown'}</div>
                         <div><strong>Size:</strong> ${sizeMB} MB</div>
                         <div><strong>Version:</strong> ${version}</div>
                         <a href="${downloadUrl}" target="_blank" class="md-button md-button--primary" style="margin-top:1rem;">Download ROM</a>
@@ -92,19 +100,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(jsonUrl);
             if (!response.ok) throw new Error('Failed to load JSON');
             const data = await response.json();
-            const build = data.response[0];
             
-            const rawSize = build.size || (build.payload && build.payload[0] ? build.payload[0].FILE_SIZE : null);
-            const sizeMB = rawSize ? (rawSize / (1024 * 1024)).toFixed(2) : "Unknown";
+            const build = (data.response && Array.isArray(data.response)) ? data.response[0] : (Array.isArray(data) ? data[0] : data);
+            const fileInfo = (build.files && Array.isArray(build.files) && build.files[0]) ? build.files[0] : build;
+
+            const rawSize = fileInfo.size || (build.payload && build.payload[0] ? build.payload[0].FILE_SIZE : null);
+            const sizeMB = rawSize ? (Number(rawSize) / (1024 * 1024)).toFixed(2) : "Unknown";
             
-            let version = build.version;
-            if (!version && build.filename && build.filename.toUpperCase().includes('YAAP')) {
-                const parts = build.filename.split('-');
-                if (parts.length > 1) version = parts[1];
+            let version = build.version || fileInfo.version;
+            if (!version && fileInfo.filename) {
+                if (fileInfo.filename.toUpperCase().includes('YAAP')) {
+                    const parts = fileInfo.filename.split('-');
+                    if (parts.length > 1) version = parts[1];
+                } else if (fileInfo.filename.includes('lineage-')) {
+                    const match = fileInfo.filename.match(/lineage-([0-9.]+)-/);
+                    if (match) version = match[1];
+                }
             }
             version = version || "N/A";
-            const downloadUrl = build.url || fallbackDlUrl + build.filename;
-            const filename = build.filename || "Unknown";
+            const downloadUrl = fileInfo.url || (fallbackDlUrl && fileInfo.filename ? fallbackDlUrl + fileInfo.filename : '');
+            const filename = fileInfo.filename || "Unknown";
 
             // Render loaded state
             card.innerHTML = `
