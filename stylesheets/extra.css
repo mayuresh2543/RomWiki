@@ -128,3 +128,60 @@
     border-radius: 0.2rem;
     color: var(--md-typeset-color);
 }
+
+/* ==========================================================================
+   Sidebar Navigation Tree & Circle Indicators
+   ========================================================================== */
+
+/* Expand sidebar width on desktop so long device names fit without wrapping */
+@media screen and (min-width: 60em) {
+    .md-sidebar--primary {
+        width: 16.5rem;
+    }
+}
+
+.md-nav--primary .md-nav__link {
+    white-space: normal;
+    word-break: keep-all;
+}
+
+/* Subtle tree guide line for nested sub-lists */
+.md-nav--primary .md-nav__item--nested .md-nav__list {
+    border-left: 1px solid var(--md-default-fg-color--lightest);
+    margin-left: 0.65rem;
+    padding-left: 0.25rem;
+}
+
+/* Sub-item links */
+.md-nav--primary .md-nav__item--nested .md-nav__list .md-nav__link {
+    position: relative;
+    padding-left: 1.3rem;
+    font-size: 0.78rem;
+}
+
+/* Inactive sub-item: Unfilled circle symbol (○) */
+.md-nav--primary .md-nav__item--nested .md-nav__list .md-nav__link::before {
+    content: '○';
+    position: absolute;
+    left: 0.25rem;
+    font-size: 0.65rem;
+    line-height: 1.9;
+    color: var(--md-default-fg-color--light);
+    opacity: 0.6;
+    transition: all 0.2s ease;
+}
+
+/* Active sub-item: Filled circle symbol (●) */
+.md-nav--primary .md-nav__item--nested .md-nav__list .md-nav__link--active::before {
+    content: '●';
+    color: var(--md-accent-fg-color);
+    opacity: 1;
+    font-size: 0.7rem;
+}
+
+/* Hover on sub-item */
+.md-nav--primary .md-nav__item--nested .md-nav__list .md-nav__link:hover::before {
+    color: var(--md-accent-fg-color);
+    opacity: 1;
+}
+
