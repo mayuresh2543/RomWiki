@@ -21,11 +21,11 @@ nav:
   - Devices:
     - Overview: devices.md
     - Redmi Note 12 5G / POCO X5 5G (stone):
-      - Overview: stone.md
+      - Device Info: stone.md
       - Downloads: stone_downloads.md
       - Installation: stone/install.md
     - Redmi Note 11 (spes):
-      - Overview: spes.md
+      - Device Info: spes.md
       - Downloads: spes_downloads.md
       - Installation: spes/install.md
   - Google Apps: gapps.md
