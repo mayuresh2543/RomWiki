@@ -1,8 +1,5 @@
 # Downloads - Redmi Note 11 (`spes`)
 
-## Available ROMs
-
-### LineageOS 20
 <div class="live-rom-card" 
     data-title="Lineage OS 20" 
     data-subtitle="Android 13 | Unofficial" 
