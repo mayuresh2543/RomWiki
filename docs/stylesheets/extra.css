@@ -179,3 +179,25 @@
     opacity: 1;
 }
 
+/* ==========================================================================
+   Layout & Grid Width Stabilization (Prevents Horizontal Shifts)
+   ========================================================================== */
+
+/* Prevent scrollbar-induced page shift */
+html {
+    scrollbar-gutter: stable;
+}
+
+/* Ensure right sidebar placeholder stays consistent across all pages */
+@media screen and (min-width: 76.25em) {
+    .md-sidebar--secondary[hidden] {
+        display: block !important;
+        visibility: hidden !important;
+    }
+
+    .md-grid {
+        max-width: 66rem;
+    }
+}
+
+
