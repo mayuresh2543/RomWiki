@@ -9,8 +9,8 @@ theme:
     primary: blue grey
     accent: light blue
   features:
-    - toc.integrate
     - navigation.sections
+    - navigation.expand
     - navigation.top
     - search.suggest
     - search.highlight
@@ -20,8 +20,14 @@ nav:
   - Getting started: index.md
   - Devices:
     - Overview: devices.md
-    - Redmi Note 12 5G / POCO X5 5G (stone): stone.md
-    - Redmi Note 11 (spes): spes.md
+    - Redmi Note 12 5G / POCO X5 5G (stone):
+      - Overview: stone.md
+      - Downloads: stone_downloads.md
+      - Installation: stone/install.md
+    - Redmi Note 11 (spes):
+      - Overview: spes.md
+      - Downloads: spes_downloads.md
+      - Installation: spes/install.md
   - Google Apps: gapps.md
   - Troubleshooting: troubleshooting.md
 
