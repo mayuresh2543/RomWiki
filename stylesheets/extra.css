@@ -1,295 +1,13 @@
-/* ==========================================================================
-   Global Theme Customizations & Variables
-   ========================================================================== */
-:root {
-    --md-primary-fg-color: #00838f;
-    --md-primary-fg-color--light: #00bcd4;
-    --md-primary-fg-color--dark: #006064;
-    --md-accent-fg-color: #00bcd4;
-}
-
-[data-md-color-scheme="slate"] {
-    --md-primary-fg-color: #00acc1;
-    --md-primary-fg-color--light: #26c6da;
-    --md-primary-fg-color--dark: #00838f;
-    --md-accent-fg-color: #00e5ff;
-    --md-default-bg-color: #0f141c;
-    --md-default-bg-color--light: #161e2b;
-    --md-default-bg-color--lighter: #1d2737;
-    --md-default-fg-color--lightest: rgba(255, 255, 255, 0.08);
-}
-
-/* Rounded Header & Cleaner Nav */
-.md-header {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-}
-
-/* ==========================================================================
-   Hero Banner on Landing Page
-   ========================================================================== */
-.hero-banner {
-    background: linear-gradient(135deg, rgba(0, 188, 212, 0.08) 0%, rgba(38, 198, 218, 0.02) 100%);
-    border: 1px solid rgba(0, 188, 212, 0.2);
-    border-radius: 1rem;
-    padding: 3rem 2rem;
-    margin: 1.5rem 0 2.5rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.35rem 0.9rem;
-    border-radius: 2rem;
-    background: rgba(0, 188, 212, 0.12);
-    border: 1px solid rgba(0, 188, 212, 0.25);
-    color: var(--md-accent-fg-color);
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 1rem;
-}
-
-.hero-title {
-    font-size: 2.3rem;
-    font-weight: 800;
-    color: var(--md-default-fg-color);
-    margin: 0 0 1rem;
-    line-height: 1.25;
-}
-
-.hero-subtitle {
-    font-size: 1.05rem;
-    color: var(--md-default-fg-color--light);
-    max-width: 620px;
-    margin: 0 auto 1.75rem;
-    line-height: 1.6;
-}
-
-.hero-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.hero-actions .md-button {
-    border-radius: 0.5rem;
-    padding: 0.65rem 1.4rem;
-    font-weight: 600;
-}
-
-/* ==========================================================================
-   Feature Highlights Grid
-   ========================================================================== */
-.feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.25rem;
-    margin: 2rem 0;
-}
-
-.feature-card {
-    background: var(--md-default-bg-color);
-    border: 1px solid var(--md-default-fg-color--lightest);
-    border-radius: 0.85rem;
-    padding: 1.4rem;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(0, 188, 212, 0.4);
-    box-shadow: 0 8px 24px -6px rgba(0, 188, 212, 0.12);
-}
-
-.feature-icon {
-    font-size: 1.75rem;
-    margin-bottom: 0.75rem;
-    display: inline-block;
-}
-
-.feature-card h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.1rem;
-    font-weight: 700;
-}
-
-.feature-card p {
-    margin: 0;
-    font-size: 0.88rem;
-    color: var(--md-default-fg-color--light);
-    line-height: 1.5;
-}
-
-/* ==========================================================================
-   Visual Device Catalog Grid
-   ========================================================================== */
-.device-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 1.5rem;
-    margin: 2rem 0;
-}
-
-.device-card {
-    background: var(--md-default-bg-color);
-    border: 1px solid var(--md-default-fg-color--lightest);
-    border-radius: 1rem;
-    overflow: hidden;
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-.device-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--md-accent-fg-color);
-    box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.3);
-}
-
-.device-image-wrapper {
-    background: linear-gradient(180deg, rgba(0, 188, 212, 0.06) 0%, transparent 100%);
-    padding: 1.75rem 1.5rem 1.25rem;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.device-image-wrapper img {
-    max-height: 180px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.35));
-    transition: transform 0.3s ease;
-}
-
-.device-card:hover .device-image-wrapper img {
-    transform: scale(1.03);
-}
-
-.device-card-content {
-    padding: 1.25rem 1.5rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.device-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.device-name {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin: 0;
-    color: var(--md-default-fg-color);
-}
-
-.device-badge {
-    display: inline-block;
-    padding: 0.2rem 0.6rem;
-    border-radius: 1rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    font-family: var(--md-code-font-family);
-    background: rgba(0, 188, 212, 0.12);
-    color: var(--md-accent-fg-color);
-    white-space: nowrap;
-}
-
-.device-specs-list {
-    font-size: 0.85rem;
-    color: var(--md-default-fg-color--light);
-    margin: 0.75rem 0 1.25rem;
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-}
-
-.device-specs-list li {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0;
-}
-
-.device-actions {
-    margin-top: auto;
-    display: flex;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-}
-
-.device-actions .md-button {
-    flex: 1 1 calc(50% - 0.3rem);
-    text-align: center;
-    font-size: 0.82rem;
-    padding: 0.45rem 0.8rem;
-    border-radius: 0.4rem;
-}
-
-/* ==========================================================================
-   Specs Grid for Device Overview Pages
-   ========================================================================== */
-.specs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 0.85rem;
-    margin: 1.5rem 0;
-}
-
-.spec-chip {
-    background: var(--md-default-bg-color--light);
-    border: 1px solid var(--md-default-fg-color--lightest);
-    border-radius: 0.65rem;
-    padding: 0.85rem 1rem;
-}
-
-.spec-chip-label {
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--md-default-fg-color--light);
-    letter-spacing: 0.05em;
-}
-
-.spec-chip-value {
-    font-size: 0.98rem;
-    font-weight: 600;
-    color: var(--md-default-fg-color);
-    margin-top: 0.25rem;
-}
-
-/* ==========================================================================
-   Live ROM Cards
-   ========================================================================== */
+/* Live ROM Card Styles */
 .live-rom-card {
     background-color: var(--md-default-bg-color);
     border: 1px solid var(--md-default-fg-color--lightest);
-    border-radius: 0.85rem;
+    border-radius: 0.5rem;
     padding: 1.5rem;
-    margin-bottom: 1.75rem;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     position: relative;
     overflow: hidden;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.live-rom-card:hover {
-    border-color: rgba(0, 188, 212, 0.4);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
 
 .live-rom-card::before {
@@ -299,54 +17,48 @@
     left: 0;
     width: 4px;
     height: 100%;
-    background: linear-gradient(180deg, var(--md-accent-fg-color) 0%, #00838f 100%);
+    background-color: var(--md-primary-fg-color);
 }
 
 .live-rom-card-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
 }
 
 .live-rom-card-title {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--md-default-fg-color);
     margin: 0;
 }
 
 .live-rom-card-subtitle {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--md-accent-fg-color);
-    background: rgba(0, 188, 212, 0.12);
-    padding: 0.2rem 0.65rem;
-    border-radius: 1rem;
-    letter-spacing: 0.04em;
-    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--md-default-fg-color--light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
 }
 
 .live-rom-card-info-container {
-    background-color: var(--md-default-bg-color--light);
-    border: 1px solid var(--md-default-fg-color--lightest);
-    border-radius: 0.6rem;
-    padding: 1rem 1.25rem;
-    margin-bottom: 1.25rem;
+    background-color: var(--md-default-fg-color--lightest);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .live-rom-card-info-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--md-default-fg-color--lightest);
+    margin-top: 0.5rem;
 }
 
 .live-rom-card-label {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--md-default-fg-color--light);
     text-transform: uppercase;
@@ -360,55 +72,29 @@
 }
 
 .live-rom-card-filename {
-    font-family: var(--md-code-font-family);
-    font-size: 0.85rem;
+    font-family: var(--md-text-font-family);
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--md-default-fg-color);
     word-break: break-all;
-    margin-top: 0.35rem;
-    padding: 0.45rem 0.65rem;
-    background: var(--md-default-bg-color);
-    border-radius: 0.4rem;
-    border: 1px solid var(--md-default-fg-color--lightest);
 }
 
 .live-rom-card-actions {
     display: flex;
-    gap: 0.65rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
-    align-items: center;
 }
 
-.live-rom-card-actions .md-button {
-    border-radius: 0.45rem;
-    font-weight: 600;
-    font-size: 0.85rem;
-    padding: 0.5rem 1rem;
-    transition: all 0.2s ease;
-}
-
-.live-rom-card-actions .md-button--primary {
-    background-color: var(--md-accent-fg-color);
-    color: #0f141c !important;
-    border: none;
-}
-
-.live-rom-card-actions .md-button--primary:hover {
-    background-color: #26c6da;
-    box-shadow: 0 4px 14px rgba(0, 188, 212, 0.35);
-}
-
-/* Shimmer Loading State */
 .shimmer {
     color: transparent;
-    background: linear-gradient(100deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.3) 50%, rgba(255,255,255,0) 60%) var(--md-default-fg-color--lightest);
+    background: linear-gradient(100deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.5) 50%, rgba(255,255,255,0) 60%) var(--md-default-fg-color--lightest);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
-    border-radius: 0.4rem;
+    border-radius: 0.25rem;
 }
 
 [data-md-color-scheme="slate"] .shimmer {
-    background: linear-gradient(100deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.08) 50%, rgba(255,255,255,0) 60%) var(--md-default-bg-color--light);
+    background: linear-gradient(100deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.1) 50%, rgba(255,255,255,0) 60%) var(--md-default-bg-color--light);
     background-size: 200% 100%;
 }
 
@@ -418,14 +104,14 @@
 }
 
 .live-rom-card-loader {
-    width: 22px;
-    height: 22px;
-    border: 2.5px solid var(--md-default-fg-color--lightest);
-    border-bottom-color: var(--md-accent-fg-color);
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--md-default-fg-color--lightest);
+    border-bottom-color: var(--md-primary-fg-color);
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;
-    animation: rotation 0.9s linear infinite;
+    animation: rotation 1s linear infinite;
 }
 
 @keyframes rotation {
@@ -438,13 +124,7 @@
     padding: 1.25rem;
     background-color: var(--md-default-bg-color--light);
     border: 1px solid var(--md-default-fg-color--lightest);
-    border-left: 4px solid var(--md-accent-fg-color);
-    border-radius: 0.5rem;
+    border-left: 4px solid var(--md-primary-fg-color);
+    border-radius: 0.2rem;
     color: var(--md-typeset-color);
-    animation: fadeIn 0.2s ease-in;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: translateY(0); }
 }
