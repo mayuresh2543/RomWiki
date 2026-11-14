@@ -42,6 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     version = version || "N/A";
                     const downloadUrl = fileInfo.url || `https://github.com/mayuresh-releases/YAAP_stone/releases/latest/download/${fileInfo.filename}`;
+                    const isLineage = (fileInfo.filename && fileInfo.filename.includes('lineage-'));
+                    const bootUrl = downloadUrl ? downloadUrl.substring(0, downloadUrl.lastIndexOf('/') + 1) + 'boot.img' : '';
+                    const buttonsHtml = isLineage ? `
+                        <a href="${downloadUrl}" target="_blank" class="md-button md-button--primary" style="margin-top:1rem; margin-right:0.5rem;">ROM</a>
+                        <a href="${bootUrl}" target="_blank" class="md-button" style="margin-top:1rem;">Boot</a>
+                    ` : `
+                        <a href="${downloadUrl}" target="_blank" class="md-button md-button--primary" style="margin-top:1rem;">Download ROM</a>
+                    `;
                     viewContainer.innerHTML = `
                         <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                             <strong>Build Information</strong>
@@ -50,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div><strong>File:</strong> ${fileInfo.filename || 'Unknown'}</div>
                         <div><strong>Size:</strong> ${sizeMB} MB</div>
                         <div><strong>Version:</strong> ${version}</div>
-                        <a href="${downloadUrl}" target="_blank" class="md-button md-button--primary" style="margin-top:1rem;">Download ROM</a>
+                        ${buttonsHtml}
                     `;
                 } else if (href.endsWith('.md') || href.endsWith('.txt')) {
                     const text = await response.text();
@@ -121,6 +129,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const downloadUrl = fileInfo.url || (fallbackDlUrl && fileInfo.filename ? fallbackDlUrl + fileInfo.filename : '');
             const filename = fileInfo.filename || "Unknown";
 
+            const isLineage = title.toUpperCase().includes('LINEAGE') || card.getAttribute('data-has-boot') === 'true';
+            const bootUrl = downloadUrl ? downloadUrl.substring(0, downloadUrl.lastIndexOf('/') + 1) + 'boot.img' : '';
+
+            let downloadButtonsHtml = '';
+            if (isLineage) {
+                downloadButtonsHtml = `
+                    <a href="${downloadUrl}" class="md-button md-button--primary" target="_blank" rel="noopener">ROM</a>
+                    <a href="${bootUrl}" class="md-button" target="_blank" rel="noopener">Boot</a>
+                `;
+            } else {
+                downloadButtonsHtml = `
+                    <a href="${downloadUrl}" class="md-button md-button--primary" target="_blank" rel="noopener">Download</a>
+                `;
+            }
+
             // Render loaded state
             card.innerHTML = `
                 <div class="live-rom-card-header">
@@ -144,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
                 <div class="live-rom-card-actions">
-                    <a href="${downloadUrl}" class="md-button md-button--primary">Download</a>
+                    ${downloadButtonsHtml}
                     <button class="md-button changelog-btn">Changelog</button>
                     <a href="${installUrl}" class="md-button">Install Guide</a>
                 </div>
