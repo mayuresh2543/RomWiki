@@ -1,22 +1,22 @@
 site_name: Mayuresh's ROMs
 site_url: https://mayuresh2543.github.io/RomWiki/
-repo_url: https://github.com/mayuresh2543
-repo_name: mayuresh2543
+repo_url: https://github.com/mayuresh2543/RomWiki
+repo_name: mayuresh2543/RomWiki
 
 theme:
   name: material
-  custom_dir: overrides
   logo: assets/logo.svg
   favicon: assets/logo.svg
   font: false
   palette:
     scheme: slate
-    primary: custom
-    accent: custom
+    primary: black
+    accent: cyan
   features:
+    - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.top
     - navigation.path
-    - navigation.instant
     - search.suggest
     - search.highlight
     - content.code.copy
