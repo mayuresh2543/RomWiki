@@ -1,22 +1,33 @@
 # Troubleshooting
 
-If you encounter issues while flashing or using the ROMs, check the common solutions below.
+Common solutions and recovery procedures for issues encountered during installation or daily use.
 
 ## Common Issues
 
-### Bootloop after flashing
-This usually happens if you forgot to format data or if you flashed an incompatible kernel or GApps package.
-**Solution:** 
-1. Boot into Recovery.
-2. Select **Factory Reset** -> **Format data / factory reset**.
-3. Reboot to System.
+### Bootloop After Flashing
 
-### Error 1 during sideload
-This means the recovery failed to install the zip. It could be a corrupted download or an incompatible recovery.
-**Solution:**
-1. Verify the SHA256 checksum of the downloaded file.
-2. Ensure you are using the exact Recovery recommended in the device's installation instructions.
+This usually occurs if formatting data was skipped or an incompatible kernel or GApps package was flashed.
 
-## Need more help?
+**Procedure:**
 
-If you are still stuck, feel free to reach out to the community on Telegram. Make sure to provide a logcat if you are experiencing crashes!
+1. Boot into Recovery (hold `Volume Up` + `Power`).
+2. Navigate to **Factory Reset** > **Format data / factory reset** and confirm.
+3. Select **Reboot system now**.
+
+### Error 1 During Sideload
+
+This indicates recovery failed to verify or execute the installation script within the zip file. This typically stems from an incompatible recovery build or a corrupted download.
+
+**Procedure:**
+
+1. Verify that your recovery build matches the exact recovery recommended in your device guide.
+2. Re-download the ROM zip and verify its checksum.
+3. Ensure platform-tools is up to date (`adb version`).
+
+## Support Resources
+
+If the above steps do not resolve your issue, join our community on [Telegram](https://t.me/Mayuresh_Releases). When asking for assistance, always provide:
+
+- Device model and codename (`stone` / `spes`)
+- ROM name and version
+- Exact error output or a full `logcat`

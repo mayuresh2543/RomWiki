@@ -8,7 +8,8 @@ If you are downloading a "Vanilla" build (without GApps), we highly recommend us
 
 ### MindTheGapps
 
-> **TIP:** This is the officially recommended GApps package for LineageOS.
+!!! tip "LineageOS Recommendation"
+    MindTheGapps is the officially recommended GApps package for LineageOS.
 
 Choose the package that exactly matches the Android version of the ROM you are installing:
 
@@ -16,11 +17,20 @@ Choose the package that exactly matches the Android version of the ROM you are i
 - **Android 15**: [MindTheGapps 15.0.0-arm64 (Latest Release)](https://github.com/MindTheGapps/15.0.0-arm64/releases/latest) (for LineageOS 22.2)
 - **Android 13**: [MindTheGapps 13.0.0-arm64 (Latest Release)](https://github.com/MindTheGapps/13.0.0-arm64/releases/latest) (for LineageOS 20 on `spes`)
 
-### Installation
+### Sideload Procedure
 
-1. Sideload the ROM zip first: `adb sideload rom.zip`
-2. Reboot to Recovery.
-3. Sideload the GApps zip: `adb sideload gapps.zip`
-4. Reboot to System.
+1. Sideload the ROM zip first:
+   ```bash
+   adb sideload rom.zip
+   ```
+2. Reboot back into Recovery:
+   `Advanced > Reboot to recovery`
+3. Sideload the GApps package:
+   ```bash
+   adb sideload MindTheGapps-*.zip
+   ```
+4. Reboot system:
+   `Reboot system now`
 
-> **WARNING:** Do **NOT** flash GApps if the ROM specifies it already includes them (such as **YAAP** or any build with pre-included GApps). Doing so will cause bootloops.
+!!! warning "Do Not Flash on GApps-Included ROMs"
+    Do **not** flash GApps if the ROM specifies it already includes them (such as **YAAP** or any build with pre-included GApps). Doing so will cause bootloops.

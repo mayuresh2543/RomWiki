@@ -1,26 +1,30 @@
-# Downloads - Redmi Note 12 5G / POCO X5 5G (`stone`)
+# Downloads — Redmi Note 12 5G / POCO X5 5G (`stone`)
 
-<div class="live-rom-card" 
-    data-title="Lineage OS 24.0" 
-    data-subtitle="Android 17 | Unofficial" 
-    data-json="https://raw.githubusercontent.com/mayuresh2543/OTA/refs/heads/lineage-24.0/Builds/stone.json" 
-    data-changelog="https://raw.githubusercontent.com/mayuresh2543/OTA/refs/heads/lineage-24.0/Changelogs/stone.txt" 
-    data-install="../stone/install/">
-</div>
+Direct build manifests and package downloads. Build information is fetched live from official release manifests.
 
-<div class="live-rom-card" 
-    data-title="Lineage OS 22.2" 
-    data-subtitle="Android 15 | Unofficial" 
-    data-json="https://raw.githubusercontent.com/mayuresh2543/OTA/refs/heads/lineage-22.2/Builds/stone.json" 
-    data-changelog="https://raw.githubusercontent.com/mayuresh2543/OTA/refs/heads/lineage-22.2/Changelogs/stone.txt" 
-    data-install="../stone/install/">
-</div>
+<div class="rom-card-list">
+  <div class="live-rom-card" 
+      data-title="Lineage OS 24.0" 
+      data-subtitle="Android 17 | Unofficial" 
+      data-json="https://raw.githubusercontent.com/mayuresh2543/OTA/refs/heads/lineage-24.0/Builds/stone.json" 
+      data-changelog="https://raw.githubusercontent.com/mayuresh2543/OTA/refs/heads/lineage-24.0/Changelogs/stone.txt" 
+      data-install="../stone/install/">
+  </div>
 
-<div class="live-rom-card" 
-    data-title="YAAP" 
-    data-subtitle="Android 17 | Unofficial" 
-    data-json="https://raw.githubusercontent.com/mayuresh2543/yaap_ota-info/refs/heads/full-signed/stone/stone.json" 
-    data-changelog="https://raw.githubusercontent.com/mayuresh2543/yaap_ota-info/refs/heads/full-signed/stone/Changelog.txt" 
-    data-install="../stone/install/"
-    data-fallback-dl="https://github.com/mayuresh-releases/YAAP_stone/releases/latest/download/">
+  <div class="live-rom-card" 
+      data-title="Lineage OS 22.2" 
+      data-subtitle="Android 15 | Unofficial" 
+      data-json="https://raw.githubusercontent.com/mayuresh2543/OTA/refs/heads/lineage-22.2/Builds/stone.json" 
+      data-changelog="https://raw.githubusercontent.com/mayuresh2543/OTA/refs/heads/lineage-22.2/Changelogs/stone.txt" 
+      data-install="../stone/install/">
+  </div>
+
+  <div class="live-rom-card" 
+      data-title="YAAP" 
+      data-subtitle="Android 17 | Unofficial" 
+      data-json="https://raw.githubusercontent.com/mayuresh2543/yaap_ota-info/refs/heads/full-signed/stone/stone.json" 
+      data-changelog="https://raw.githubusercontent.com/mayuresh2543/yaap_ota-info/refs/heads/full-signed/stone/Changelog.txt" 
+      data-install="../stone/install/"
+      data-fallback-dl="https://github.com/mayuresh-releases/YAAP_stone/releases/latest/download/">
+  </div>
 </div>

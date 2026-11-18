@@ -1,34 +1,89 @@
 /* ==========================================================================
-   Design Tokens & Variables
+   ROM.WIKI — Technical Documentation Design System
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ==========================================================================
+   1. Design Tokens & Global CSS Variables
    ========================================================================== */
 :root,
 [data-md-color-scheme="slate"] {
-    --rom-card-bg: var(--md-default-bg-color);
-    --rom-card-border: 1px solid rgba(255, 255, 255, 0.08);
-    --rom-card-rule: 1px solid rgba(255, 255, 255, 0.12);
-    --rom-mono-font: 'Roboto Mono', ui-monospace, 'Cascadia Code', monospace;
-    --rom-accent: var(--md-accent-fg-color);
-    --rom-muted: var(--md-default-fg-color--light);
-    --rom-label-size: 0.7rem;
-    --rom-label-spacing: 0.08em;
+    /* Base Palette */
+    --md-default-bg-color: #0d1117;
+    --md-default-bg-color--light: #161b22;
+    --md-default-bg-color--lighter: #21262d;
+    --md-default-bg-color--lightest: #30363d;
+    --md-default-fg-color: #c9d1d9;
+    --md-default-fg-color--light: #8b949e;
+    --md-default-fg-color--lighter: #6e7681;
+    --md-default-fg-color--lightest: #484f58;
+
+    --md-primary-fg-color: #00bcd4;
+    --md-primary-fg-color--light: #26c6da;
+    --md-primary-fg-color--dark: #0097a7;
+    --md-primary-bg-color: #0d1117;
+
+    --md-accent-fg-color: #00bcd4;
+    --md-accent-fg-color--transparent: rgba(0, 188, 212, 0.12);
+    --md-typeset-a-color: #00bcd4;
+
+    --md-code-bg-color: #161b22;
+    --md-code-fg-color: #c9d1d9;
+
+    /* Custom Technical Tokens */
+    --rom-bg: #0d1117;
+    --rom-surface: #161b22;
+    --rom-surface-hover: #1f242c;
+    --rom-border: #21262d;
+    --rom-border-subtle: #30363d;
+    --rom-text: #c9d1d9;
+    --rom-text-bright: #f0f6fc;
+    --rom-muted: #8b949e;
+    --rom-dim: #6e7681;
+    --rom-accent: #00bcd4;
+    --rom-accent-dim: rgba(0, 188, 212, 0.12);
+    --rom-accent-border: rgba(0, 188, 212, 0.35);
+
+    --rom-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --rom-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* ==========================================================================
-   Layout & Grid Width Stabilization (Prevents Horizontal Shifts)
-   ========================================================================== */
+/* Enforce zero box-shadows everywhere for flat technical aesthetic */
+.md-header,
+.md-sidebar,
+.md-card,
+.md-content,
+.md-button,
+.md-typeset table,
+.md-typeset pre,
+.md-typeset code,
+.md-search__inner {
+    box-shadow: none !important;
+}
+
+body {
+    font-family: var(--rom-sans);
+    background-color: var(--rom-bg);
+    color: var(--rom-text);
+}
+
 html {
     scrollbar-gutter: stable;
 }
 
+/* ==========================================================================
+   2. Layout & Grid Width Stabilization
+   ========================================================================== */
 @media screen and (min-width: 60em) {
     .md-sidebar--primary {
-        width: 17rem !important;
+        width: 16rem !important;
     }
 }
 
 @media screen and (min-width: 76.25em) {
     .md-sidebar--primary {
-        width: 17rem !important;
+        width: 16rem !important;
     }
 
     .md-sidebar--secondary[hidden] {
@@ -37,142 +92,496 @@ html {
     }
 
     .md-grid {
-        max-width: 66rem;
+        max-width: 72rem;
     }
 }
 
 /* ==========================================================================
-   Sidebar Navigation Tree & Circle Indicators (Primary Sidebar ONLY)
+   3. Custom Technical Header Bar
    ========================================================================== */
-
-/* Level 2 sub-items (Device Info, Downloads, Installation) only in primary sidebar */
-.md-sidebar--primary .md-nav[data-md-level="2"] .md-nav__link {
-    position: relative;
-    padding-left: 1.25rem !important;
-    font-size: 0.78rem;
+.md-header.rom-header {
+    background-color: var(--rom-bg) !important;
+    border-bottom: 1px solid var(--rom-border);
+    height: 54px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
 }
 
-/* Base Circle: 100% locked position for all states */
-.md-sidebar--primary .md-nav[data-md-level="2"] .md-nav__link::before {
-    content: '';
-    display: inline-block;
-    position: absolute;
-    left: 0.25rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    border: 1.5px solid var(--md-default-fg-color--light);
-    background-color: transparent;
-    opacity: 0.6;
-    box-sizing: border-box;
-    transition: border-color 0.15s ease, background-color 0.15s ease, opacity 0.15s ease;
+.rom-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    height: 100%;
+    padding: 0 1rem;
 }
 
-/* Active sub-item: Fills the exact same circle */
-.md-sidebar--primary .md-nav[data-md-level="2"] .md-nav__link--active::before {
-    border-color: var(--md-accent-fg-color);
-    background-color: var(--md-accent-fg-color);
-    opacity: 1;
+.rom-drawer-button {
+    color: var(--rom-muted) !important;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
 }
 
-/* Hover on sub-item */
-.md-sidebar--primary .md-nav[data-md-level="2"] .md-nav__link:hover::before {
-    border-color: var(--md-accent-fg-color);
-    opacity: 1;
+@media screen and (max-width: 59.99em) {
+    .rom-drawer-button {
+        display: inline-flex !important;
+    }
+    .rom-header__nav {
+        display: none !important;
+    }
 }
 
-/* ==========================================================================
-   Compact Live ROM Cards (Clean, Table-Row Style, No Shadows/Gradients)
-   ========================================================================== */
-.live-rom-card {
-    border-top: var(--rom-card-rule);
-    padding: 1.25rem 0;
-    margin-bottom: 0.5rem;
-    position: relative;
-    background: transparent;
+.rom-header__brand {
+    display: flex !important;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    flex-shrink: 0;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
-.live-rom-card:first-of-type {
-    border-top: none;
+.rom-header__brand img,
+.rom-header__brand svg {
+    width: 24px;
+    height: 24px;
+    display: block;
 }
 
-.live-rom-card-header {
+.rom-header__site-name {
+    font-family: var(--rom-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--rom-text-bright);
+}
+
+.rom-accent {
+    color: var(--rom-accent);
+}
+
+.rom-header__nav {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    flex: 1;
+}
+
+.rom-header__nav-link {
+    font-family: var(--rom-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--rom-muted);
+    padding: 0.3rem 0.65rem;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: color 0.12s ease, background-color 0.12s ease;
+}
+
+.rom-header__nav-link:hover {
+    color: var(--rom-text-bright);
+    background-color: var(--rom-surface);
+    text-decoration: none;
+}
+
+.rom-header__nav-link--active {
+    color: var(--rom-accent) !important;
+    background-color: var(--rom-accent-dim) !important;
+}
+
+.rom-header__actions {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 0.6rem;
+    margin-left: auto;
+    flex-shrink: 0;
 }
 
-.live-rom-card-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin: 0;
-    color: var(--md-default-fg-color);
+.rom-search-button {
+    color: var(--rom-muted) !important;
+    cursor: pointer;
+    transition: color 0.12s ease;
 }
 
-.live-rom-card-subtitle {
-    font-size: var(--rom-label-size);
+.rom-search-button:hover {
+    color: var(--rom-text-bright) !important;
+}
+
+.rom-header__icon-link {
+    color: var(--rom-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    transition: color 0.12s ease;
+}
+
+.rom-header__icon-link:hover {
+    color: var(--rom-text-bright);
+}
+
+/* Material Search Box Customization */
+.md-search__inner {
+    background-color: var(--rom-surface) !important;
+    border: 1px solid var(--rom-border) !important;
+    border-radius: 4px;
+}
+
+.md-search__input {
+    background-color: transparent !important;
+    font-family: var(--rom-mono) !important;
+    font-size: 0.8rem !important;
+    color: var(--rom-text-bright) !important;
+}
+
+/* ==========================================================================
+   4. Sidebar: Code-Editor Tree Navigation
+   ========================================================================== */
+.md-sidebar--primary {
+    background-color: var(--rom-bg);
+    border-right: 1px solid var(--rom-border);
+}
+
+/* Hide the repetitive title in the sidebar */
+.md-sidebar--primary .md-nav__title {
+    display: none;
+}
+
+/* Nav Item Styling */
+.md-sidebar--primary .md-nav__item .md-nav__link {
+    font-family: var(--rom-mono);
+    font-size: 0.75rem;
+    color: var(--rom-muted);
+    padding: 0.35rem 0.75rem;
+    border-radius: 3px;
+    border-left: 2px solid transparent;
+    transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+.md-sidebar--primary .md-nav__item .md-nav__link:hover {
+    color: var(--rom-text-bright);
+    background-color: var(--rom-surface);
+}
+
+.md-sidebar--primary .md-nav__item .md-nav__link--active {
+    color: var(--rom-accent) !important;
+    background-color: var(--rom-accent-dim) !important;
+    border-left: 2px solid var(--rom-accent) !important;
     font-weight: 600;
+}
+
+/* Section Labels (e.g. DEVICES, GETTING STARTED) */
+.md-sidebar--primary .md-nav__item--section > .md-nav__link {
+    font-size: 0.65rem;
     text-transform: uppercase;
-    letter-spacing: var(--rom-label-spacing);
+    letter-spacing: 0.08em;
+    color: var(--rom-dim) !important;
+    font-weight: 700;
+    padding-top: 1rem;
+    border-left: none !important;
+    background-color: transparent !important;
+}
+
+/* Nested Sub-levels (Device Info, Downloads, Installation) */
+.md-sidebar--primary .md-nav[data-md-level="2"] {
+    border-left: 1px solid var(--rom-border);
+    margin-left: 0.75rem;
+    padding-left: 0.4rem;
+}
+
+.md-sidebar--primary .md-nav[data-md-level="2"] .md-nav__link {
+    font-size: 0.72rem;
+    padding-left: 0.65rem !important;
+}
+
+/* Ensure absolutely no circle bullets or pseudo bullets exist */
+.md-sidebar--primary .md-nav__link::before,
+.md-sidebar--secondary .md-nav__link::before {
+    display: none !important;
+    content: none !important;
+}
+
+/* Right Sidebar (Table of Contents) */
+.md-sidebar--secondary {
+    border-left: 1px solid var(--rom-border);
+}
+
+.md-sidebar--secondary .md-nav__title {
+    font-family: var(--rom-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--rom-dim);
+    font-weight: 700;
+}
+
+.md-sidebar--secondary .md-nav__link {
+    font-family: var(--rom-mono);
+    font-size: 0.72rem;
+    color: var(--rom-muted);
+    padding: 0.25rem 0.5rem;
+    border-left: 2px solid transparent;
+    transition: color 0.12s ease, border-color 0.12s ease;
+}
+
+.md-sidebar--secondary .md-nav__link:hover {
+    color: var(--rom-text-bright);
+}
+
+.md-sidebar--secondary .md-nav__link--active {
+    color: var(--rom-accent) !important;
+    border-left: 2px solid var(--rom-accent);
+}
+
+/* ==========================================================================
+   5. Homepage Hero & Device Grid
+   ========================================================================== */
+.rom-hero {
+    padding: 1.5rem 0 1.25rem;
+    border-bottom: 1px solid var(--rom-border);
+    margin-bottom: 2rem;
+}
+
+.rom-hero__tag {
+    font-family: var(--rom-mono);
+    font-size: 0.8rem;
     color: var(--rom-accent);
-    background: color-mix(in srgb, var(--rom-accent) 12%, transparent);
-    padding: 0.15rem 0.5rem;
-    border-radius: 0.2rem;
+    margin-bottom: 0.4rem;
     display: inline-block;
 }
 
-.live-rom-card-info-container {
+.rom-hero__title {
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    color: var(--rom-text-bright) !important;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem 0 !important;
+}
+
+.rom-hero__desc {
+    font-size: 0.95rem;
+    color: var(--rom-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Device Selector Grid */
+.rom-device-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 2.5rem;
+}
+
+.rom-device-card {
+    background: var(--rom-surface);
+    border: 1px solid var(--rom-border);
+    border-radius: 4px;
+    padding: 1.25rem;
     display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-    padding: 0.5rem 0;
-    margin-bottom: 0.75rem;
+    flex-direction: column;
+    transition: border-color 0.15s ease;
+}
+
+.rom-device-card:hover {
+    border-color: var(--rom-accent-border);
+}
+
+.rom-device-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+}
+
+.rom-device-card__codename {
+    font-family: var(--rom-mono);
+    font-size: 0.78rem;
+    color: var(--rom-accent);
+    font-weight: 600;
+}
+
+.rom-badge {
+    font-family: var(--rom-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.12rem 0.45rem;
+    border-radius: 3px;
+    background: var(--rom-accent-dim);
+    color: var(--rom-accent);
+    border: 1px solid rgba(0, 188, 212, 0.25);
+}
+
+.rom-device-card__name {
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    color: var(--rom-text-bright) !important;
+    margin: 0 0 0.75rem 0 !important;
+}
+
+.rom-device-card__roms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+
+.rom-device-card__rom-pill {
+    font-family: var(--rom-mono);
+    font-size: 0.7rem;
+    color: var(--rom-muted);
+    background: var(--rom-bg);
+    border: 1px solid var(--rom-border);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+}
+
+.rom-device-card__links {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: auto;
     flex-wrap: wrap;
 }
 
-.live-rom-card-info-col {
-    display: flex;
-    flex-direction: column;
+/* ==========================================================================
+   6. Terminal-Row ROM Download Cards & Buttons
+   ========================================================================== */
+.rom-card-list {
+    border: 1px solid var(--rom-border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 1.5rem 0 2rem;
+    background: var(--rom-surface);
 }
 
-.live-rom-card-label {
-    font-size: var(--rom-label-size);
-    text-transform: uppercase;
-    letter-spacing: var(--rom-label-spacing);
-    color: var(--rom-muted);
+.live-rom-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--rom-border);
+    background: var(--rom-surface);
+    transition: background-color 0.12s ease;
+    position: relative;
+}
+
+.live-rom-card:last-child {
+    border-bottom: none;
+}
+
+.live-rom-card:hover {
+    background-color: var(--rom-surface-hover);
+}
+
+@media screen and (max-width: 650px) {
+    .live-rom-card {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+}
+
+.live-rom-card-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.live-rom-card-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.live-rom-card-name {
+    font-family: var(--rom-mono);
+    font-size: 0.95rem;
     font-weight: 700;
-    margin-bottom: 0.2rem;
+    color: var(--rom-text-bright);
+}
+
+.live-rom-card-badge {
+    font-family: var(--rom-mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--rom-accent);
+    background: var(--rom-accent-dim);
+    border: 1px solid rgba(0, 188, 212, 0.25);
+    padding: 0.12rem 0.45rem;
+    border-radius: 2px;
+}
+
+.live-rom-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    color: var(--rom-muted);
+    font-family: var(--rom-mono);
 }
 
 .live-rom-card-filename {
-    font-family: var(--rom-mono-font);
-    font-size: 0.85rem;
-    color: var(--md-default-fg-color);
+    color: #adb5bd;
     word-break: break-all;
-}
-
-.live-rom-card-value {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--md-default-fg-color);
 }
 
 .live-rom-card-actions {
     display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    gap: 0.4rem;
     align-items: center;
+    flex-wrap: wrap;
 }
 
-.live-rom-card-actions .md-button {
-    font-size: 0.8rem;
-    padding: 0.4em 1em;
+/* Sleek Technical Buttons */
+.rom-btn {
+    font-family: var(--rom-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.35rem 0.75rem;
+    border-radius: 3px;
+    text-decoration: none !important;
+    border: 1px solid var(--rom-border-subtle);
+    color: var(--rom-text) !important;
+    background: var(--rom-bg);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.12s ease;
+    line-height: 1.4;
 }
 
-/* Subtle Shimmer */
+.rom-btn:hover {
+    border-color: var(--rom-accent);
+    color: var(--rom-accent) !important;
+    background-color: var(--rom-surface);
+}
+
+.rom-btn--primary {
+    background: var(--rom-accent) !important;
+    color: #0d1117 !important;
+    border-color: var(--rom-accent) !important;
+    font-weight: 700;
+}
+
+.rom-btn--primary:hover {
+    background: #26c6da !important;
+    border-color: #26c6da !important;
+    color: #0d1117 !important;
+}
+
+/* Subtle Shimmer & Loader */
 .shimmer {
     color: transparent;
     background: linear-gradient(
@@ -180,10 +589,10 @@ html {
         rgba(255, 255, 255, 0) 40%,
         rgba(255, 255, 255, 0.05) 50%,
         rgba(255, 255, 255, 0) 60%
-    ) var(--md-default-bg-color--light);
+    ) var(--rom-bg);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
-    border-radius: 0.2rem;
+    border-radius: 2px;
 }
 
 @keyframes shimmer {
@@ -191,10 +600,9 @@ html {
     100% { background-position: -100% 0; }
 }
 
-/* Compact Spinner */
 .live-rom-card-loader {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border: 2px solid rgba(255, 255, 255, 0.15);
     border-bottom-color: var(--rom-accent);
     border-radius: 50%;
@@ -208,24 +616,27 @@ html {
     100% { transform: rotate(360deg); }
 }
 
-/* Dynamic Changelog / View Container */
+/* Inline Expandable Changelog */
 .dynamic-view-container {
-    margin-top: 0.75rem;
-    padding: 1rem 1.25rem;
-    background-color: var(--md-code-bg-color);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    grid-column: 1 / -1;
+    width: 100%;
+    background: var(--rom-bg);
+    border: 1px solid var(--rom-border);
     border-left: 3px solid var(--rom-accent);
-    border-radius: 0.2rem;
-    font-size: 0.85em;
-    color: var(--md-typeset-color);
+    border-radius: 3px;
+    padding: 1rem 1.25rem;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--rom-text);
 }
 
 /* ==========================================================================
-   Typography & Aesthetic Refinements (Clean Technical Wiki)
+   7. Typography, Tables & Admonitions
    ========================================================================== */
 .md-typeset h1 {
-    font-size: 1.65rem;
+    font-size: 1.6rem;
     font-weight: 700;
+    color: var(--rom-text-bright);
     letter-spacing: -0.01em;
     margin-bottom: 1rem;
 }
@@ -233,7 +644,8 @@ html {
 .md-typeset h2 {
     font-size: 1.2rem;
     font-weight: 600;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--rom-text-bright);
+    border-bottom: 1px solid var(--rom-border);
     padding-bottom: 0.35rem;
     margin-top: 2rem;
     margin-bottom: 0.8rem;
@@ -242,23 +654,83 @@ html {
 .md-typeset h3 {
     font-size: 1.05rem;
     font-weight: 600;
+    color: var(--rom-text-bright);
     margin-top: 1.5rem;
 }
 
 .md-typeset code {
+    font-family: var(--rom-mono);
     background-color: rgba(255, 255, 255, 0.06);
-    border-radius: 0.2rem;
-    font-size: 0.85em;
+    border-radius: 3px;
+    font-size: 0.84em;
+    color: var(--rom-text-bright);
+    padding: 0.15rem 0.4rem;
 }
 
-/* Tables refinement */
+.md-typeset pre > code {
+    background-color: transparent;
+    padding: 0;
+}
+
+/* Pre / Code Blocks */
+.md-typeset pre {
+    background-color: var(--rom-surface) !important;
+    border: 1px solid var(--rom-border);
+    border-radius: 4px;
+    font-family: var(--rom-mono);
+    font-size: 0.82rem;
+}
+
+/* Clean Tables */
 .md-typeset table:not([class]) {
-    font-size: 0.85rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 0.2rem;
+    font-size: 0.82rem;
+    border: 1px solid var(--rom-border);
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: var(--rom-surface);
 }
 
 .md-typeset table:not([class]) th {
     background-color: rgba(255, 255, 255, 0.03);
+    font-family: var(--rom-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--rom-muted);
     font-weight: 600;
+    border-bottom: 1px solid var(--rom-border);
+    padding: 0.6rem 0.9rem;
+}
+
+.md-typeset table:not([class]) td {
+    border-bottom: 1px solid var(--rom-border);
+    padding: 0.6rem 0.9rem;
+}
+
+/* Material Admonitions */
+.md-typeset .admonition {
+    background-color: var(--rom-surface) !important;
+    border: 1px solid var(--rom-border) !important;
+    border-left: 3px solid var(--md-accent-fg-color) !important;
+    border-radius: 4px !important;
+    font-size: 0.85rem;
+}
+
+.md-typeset .admonition__title {
+    font-family: var(--rom-mono) !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: transparent !important;
+    border-bottom: 1px solid var(--rom-border) !important;
+    padding: 0.5rem 0.9rem !important;
+}
+
+.md-typeset .admonition__title::before {
+    display: none !important;
+}
+
+.md-typeset .admonition__content {
+    padding: 0.75rem 0.9rem !important;
 }
