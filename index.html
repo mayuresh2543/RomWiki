@@ -65,7 +65,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="light-blue">
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="amber">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#introduction" class="md-skip">
+        <a href="#mayureshs-roms" class="md-skip">
           Skip to content
         </a>
       
@@ -266,6 +266,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#supported-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Devices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -315,9 +326,7 @@
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
@@ -394,9 +403,7 @@
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
         
           
           <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
@@ -537,9 +544,7 @@
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
         
           
           <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
@@ -751,6 +756,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#supported-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Devices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -783,26 +799,62 @@
           
             <div class="md-content" data-md-component="content">
               
+                
+
+
+
+  
+
+
+              
               <article class="md-content__inner md-typeset">
                 
                   
 
 
 
-<h1 id="introduction">Introduction</h1>
-<p>This is the official documentation for Mayuresh's Custom ROM builds. </p>
-<p>Here you will find installation instructions, download links, and troubleshooting guides for all officially supported devices.</p>
+<h1 id="mayureshs-roms">Mayuresh's ROMs</h1>
+<p>Custom ROM builds for Xiaomi/POCO devices. Find installation instructions, downloads, and support resources below.</p>
+<h2 id="supported-devices">Supported Devices</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Device</th>
+<th style="text-align: left;">Codename</th>
+<th style="text-align: left;">Available ROMs</th>
+<th style="text-align: left;">Quick Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Redmi Note 12 5G / POCO X5 5G</strong></td>
+<td style="text-align: left;"><code>stone</code></td>
+<td style="text-align: left;">LineageOS 24.0 · LineageOS 22.2 · YAAP</td>
+<td style="text-align: left;"><a href="stone_downloads/">Downloads</a> · <a href="stone/install/">Guide</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Redmi Note 11</strong></td>
+<td style="text-align: left;"><code>spes</code></td>
+<td style="text-align: left;">LineageOS 20</td>
+<td style="text-align: left;"><a href="spes_downloads/">Downloads</a> · <a href="spes/install/">Guide</a></td>
+</tr>
+</tbody>
+</table>
 <h2 id="requirements">Requirements</h2>
-<p>Before flashing any builds, ensure you meet the following requirements:</p>
+<p>Before flashing any build, ensure you meet the following prerequisites:</p>
 <ul>
-<li><strong>Platform Tools</strong>: Install the latest <a href="https://developer.android.com/studio/releases/platform-tools">ADB &amp; Fastboot tools</a>.</li>
-<li><strong>Bootloader</strong>: Your device bootloader must be unlocked.</li>
-<li><strong>Backups</strong>: Backup all critical data on your device. Formatting data is strictly required.</li>
-<li><strong>Kernels</strong>: Custom kernels are not supported. Do not flash them or report bugs if you do.</li>
-<li><strong>Recovery</strong>: Use only the recommended recovery specified in the installation guide for your device.</li>
+<li><strong>Platform Tools</strong> — Install the latest <a href="https://developer.android.com/studio/releases/platform-tools">ADB &amp; Fastboot tools</a>.</li>
+<li><strong>Bootloader</strong> — Must be unlocked for your device.</li>
+<li><strong>Firmware</strong> — Must be on the latest official firmware for your device and region.</li>
+<li><strong>Backups</strong> — Formatting data is required; backup all critical data externally.</li>
+<li><strong>Recovery</strong> — Use only the recommended recovery specified in your device's installation guide.</li>
 </ul>
+<div class="admonition warning">
+<p class="admonition-title">Custom Kernels Not Supported</p>
+<p>Do not flash custom kernels. Any bugs reported on custom kernels will not be addressed.</p>
+</div>
 <h2 id="community-support">Community &amp; Support</h2>
-<p>Support is provided via our Telegram group. If you encounter bugs, please provide a full <code>logcat</code> when reporting issues.</p>
+<p>Support and release announcements are provided via <a href="https://t.me/Mayuresh_Releases">Telegram</a>. When reporting issues, please provide detailed reproduction steps along with a full <code>logcat</code>.</p>
 
 
 
@@ -858,7 +910,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.top", "navigation.path", "search.suggest", "search.highlight", "content.code.copy"], "search": "assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
