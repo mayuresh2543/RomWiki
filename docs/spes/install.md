@@ -1,18 +1,20 @@
-# 📲 Installation Instructions - Redmi Note 11 (`spes`)
+# Installation — Redmi Note 11 (`spes`)
 
-## ⚠️ Before You Begin
+## Before You Begin
 
-- Backup **all important data** to an external source. This process will erase your internal storage.
-- A **clean flash** is mandatory if you're switching from another ROM.
+!!! warning "Data Erasure"
+    Backup **all important data** to an external source before proceeding. This process will completely erase your internal storage.
+
+- A **clean flash** is mandatory if you're switching from another ROM or stock MIUI/HyperOS.
 - You **must be on the latest firmware** available for your device and region. Flash it manually if needed before proceeding.
 - **Recommended Recovery:** Use **AOSP recovery**.
 
-> **ℹ️ Note on Navigation:**
-> Inside AOSP recovery, use the **Volume Up/Down** buttons to navigate through options and the **Power Button** to select/confirm.
+!!! note "Recovery Navigation"
+    Inside AOSP recovery, use the **Volume Up/Down** buttons to navigate through options and the **Power Button** to select/confirm.
 
 ---
 
-## 🧹 Clean Flash (Recommended for First-Time Install)
+## Clean Flash
 
 1. **Boot into Fastboot mode**
    - Power off your device and use the hardware button combo (Volume Down + Power)

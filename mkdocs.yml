@@ -7,11 +7,11 @@ theme:
   palette:
     scheme: slate
     primary: blue grey
-    accent: light blue
+    accent: amber
   features:
     - navigation.sections
-    - navigation.expand
     - navigation.top
+    - navigation.path
     - search.suggest
     - search.highlight
     - content.code.copy

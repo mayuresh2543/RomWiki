@@ -92,16 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initial skeleton state
         card.innerHTML = `
             <div class="live-rom-card-header">
-                <div>
-                    <h3 class="live-rom-card-title">${title}</h3>
-                    <div class="live-rom-card-subtitle">${subtitle}</div>
-                </div>
-                <div class="live-rom-card-loader"></div>
+                <span class="live-rom-card-title">${title}</span>
+                <span class="live-rom-card-subtitle">${subtitle}</span>
+                <div class="live-rom-card-loader" style="margin-left:auto;"></div>
             </div>
-            <div class="live-rom-card-info-container shimmer">
-                <div style="height: 48px;"></div>
-            </div>
-            <div class="live-rom-card-actions shimmer" style="height: 36px; border-radius: 0.1rem;"></div>
+            <div class="live-rom-card-info-container shimmer" style="height: 38px;"></div>
+            <div class="live-rom-card-actions shimmer" style="height: 32px; width: 220px; border-radius: 0.2rem;"></div>
         `;
 
         try {
@@ -147,23 +143,21 @@ document.addEventListener('DOMContentLoaded', () => {
             // Render loaded state
             card.innerHTML = `
                 <div class="live-rom-card-header">
-                    <div>
-                        <h3 class="live-rom-card-title">${title}</h3>
-                        <div class="live-rom-card-subtitle">${subtitle}</div>
-                    </div>
+                    <span class="live-rom-card-title">${title}</span>
+                    <span class="live-rom-card-subtitle">${subtitle}</span>
                 </div>
                 <div class="live-rom-card-info-container">
-                    <div class="live-rom-card-label">LATEST BUILD</div>
-                    <div class="live-rom-card-filename">${filename}</div>
-                    <div class="live-rom-card-info-row">
-                        <div style="display:flex; flex-direction:column;">
-                            <span class="live-rom-card-label">SIZE</span>
-                            <span class="live-rom-card-value">${sizeMB} MB</span>
-                        </div>
-                        <div style="display:flex; flex-direction:column; text-align:right;">
-                            <span class="live-rom-card-label">VERSION</span>
-                            <span class="live-rom-card-value">${version}</span>
-                        </div>
+                    <div class="live-rom-card-info-col" style="flex: 2; min-width: 200px;">
+                        <span class="live-rom-card-label">Latest Build</span>
+                        <span class="live-rom-card-filename">${filename}</span>
+                    </div>
+                    <div class="live-rom-card-info-col">
+                        <span class="live-rom-card-label">Size</span>
+                        <span class="live-rom-card-value">${sizeMB} MB</span>
+                    </div>
+                    <div class="live-rom-card-info-col">
+                        <span class="live-rom-card-label">Version</span>
+                        <span class="live-rom-card-value">${version}</span>
                     </div>
                 </div>
                 <div class="live-rom-card-actions">
@@ -171,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button class="md-button changelog-btn">Changelog</button>
                     <a href="${installUrl}" class="md-button">Install Guide</a>
                 </div>
-                <div class="dynamic-view-container" style="display:none; margin-top:1rem;"></div>
+                <div class="dynamic-view-container" style="display:none; margin-top:0.75rem;"></div>
             `;
 
             // Attach changelog listener
@@ -203,14 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Render error state
             card.innerHTML = `
                 <div class="live-rom-card-header">
-                    <div>
-                        <h3 class="live-rom-card-title">${title}</h3>
-                        <div class="live-rom-card-subtitle">${subtitle}</div>
-                    </div>
+                    <span class="live-rom-card-title">${title}</span>
+                    <span class="live-rom-card-subtitle">${subtitle}</span>
                 </div>
-                <div class="live-rom-card-info-container" style="text-align: center; color: var(--md-typeset-color);">
-                    <div style="color: #ef4444; font-weight: bold; margin-bottom: 0.5rem;">Failed to fetch latest build info</div>
-                    <div style="font-size: 0.8em; opacity: 0.7;">${error.message}</div>
+                <div class="live-rom-card-info-container" style="color: var(--md-typeset-color);">
+                    <div style="color: #ef4444; font-weight: 600; font-size: 0.85rem;">Failed to fetch latest build info</div>
+                    <div style="font-size: 0.75rem; opacity: 0.7;">${error.message}</div>
                 </div>
             `;
         }
