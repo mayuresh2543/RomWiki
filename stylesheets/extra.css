@@ -5,11 +5,10 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 /* ==========================================================================
-   1. Design Tokens & Global CSS Variables
+   1. Design Tokens & Palette (High-Contrast Slate/Dark)
    ========================================================================== */
 :root,
 [data-md-color-scheme="slate"] {
-    /* Base Palette */
     --md-default-bg-color: #0d1117;
     --md-default-bg-color--light: #161b22;
     --md-default-bg-color--lighter: #21262d;
@@ -19,9 +18,7 @@
     --md-default-fg-color--lighter: #6e7681;
     --md-default-fg-color--lightest: #484f58;
 
-    --md-primary-fg-color: #00bcd4;
-    --md-primary-fg-color--light: #26c6da;
-    --md-primary-fg-color--dark: #0097a7;
+    --md-primary-fg-color: #000000;
     --md-primary-bg-color: #0d1117;
 
     --md-accent-fg-color: #00bcd4;
@@ -49,8 +46,9 @@
     --rom-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Enforce zero box-shadows everywhere for flat technical aesthetic */
+/* Enforce flat surfaces without box shadows */
 .md-header,
+.md-tabs,
 .md-sidebar,
 .md-card,
 .md-content,
@@ -77,13 +75,13 @@ html {
    ========================================================================== */
 @media screen and (min-width: 60em) {
     .md-sidebar--primary {
-        width: 16rem !important;
+        width: 17rem !important;
     }
 }
 
 @media screen and (min-width: 76.25em) {
     .md-sidebar--primary {
-        width: 16rem !important;
+        width: 17rem !important;
     }
 
     .md-sidebar--secondary[hidden] {
@@ -97,133 +95,36 @@ html {
 }
 
 /* ==========================================================================
-   3. Custom Technical Header Bar
+   3. Native Header & Horizontal Tabs (LineageOS Wiki Style)
    ========================================================================== */
-.md-header.rom-header {
+.md-header {
     background-color: var(--rom-bg) !important;
     border-bottom: 1px solid var(--rom-border);
-    height: 54px;
-    position: sticky;
-    top: 0;
-    z-index: 200;
 }
 
-.rom-header__inner {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    height: 100%;
-    padding: 0 1rem;
-}
-
-.rom-drawer-button {
-    color: var(--rom-muted) !important;
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 0.25rem;
-}
-
-@media screen and (max-width: 59.99em) {
-    .rom-drawer-button {
-        display: inline-flex !important;
-    }
-    .rom-header__nav {
-        display: none !important;
-    }
-}
-
-.rom-header__brand {
-    display: flex !important;
-    align-items: center;
-    gap: 0.6rem;
-    text-decoration: none;
-    flex-shrink: 0;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-.rom-header__brand img,
-.rom-header__brand svg {
-    width: 24px;
-    height: 24px;
-    display: block;
-}
-
-.rom-header__site-name {
+.md-header__title {
     font-family: var(--rom-mono);
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     font-weight: 700;
+    color: var(--rom-text-bright);
     letter-spacing: -0.01em;
-    color: var(--rom-text-bright);
 }
 
-.rom-accent {
-    color: var(--rom-accent);
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+    width: 26px;
+    height: 26px;
 }
 
-.rom-header__nav {
-    display: flex;
-    gap: 0.25rem;
-    align-items: center;
-    flex: 1;
-}
-
-.rom-header__nav-link {
-    font-family: var(--rom-mono);
-    font-size: 0.75rem;
-    font-weight: 500;
+.md-header__source {
     color: var(--rom-muted);
-    padding: 0.3rem 0.65rem;
-    border-radius: 3px;
-    text-decoration: none;
-    transition: color 0.12s ease, background-color 0.12s ease;
 }
 
-.rom-header__nav-link:hover {
-    color: var(--rom-text-bright);
-    background-color: var(--rom-surface);
-    text-decoration: none;
-}
-
-.rom-header__nav-link--active {
-    color: var(--rom-accent) !important;
-    background-color: var(--rom-accent-dim) !important;
-}
-
-.rom-header__actions {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-left: auto;
-    flex-shrink: 0;
-}
-
-.rom-search-button {
-    color: var(--rom-muted) !important;
-    cursor: pointer;
-    transition: color 0.12s ease;
-}
-
-.rom-search-button:hover {
-    color: var(--rom-text-bright) !important;
-}
-
-.rom-header__icon-link {
-    color: var(--rom-muted);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.25rem;
-    transition: color 0.12s ease;
-}
-
-.rom-header__icon-link:hover {
+.md-header__source:hover {
     color: var(--rom-text-bright);
 }
 
-/* Material Search Box Customization */
+/* Search Box Customization */
 .md-search__inner {
     background-color: var(--rom-surface) !important;
     border: 1px solid var(--rom-border) !important;
@@ -231,29 +132,55 @@ html {
 }
 
 .md-search__input {
-    background-color: transparent !important;
     font-family: var(--rom-mono) !important;
     font-size: 0.8rem !important;
     color: var(--rom-text-bright) !important;
 }
 
+/* Horizontal Tabs Bar */
+.md-tabs {
+    background-color: var(--rom-surface) !important;
+    border-bottom: 1px solid var(--rom-border);
+}
+
+.md-tabs__link {
+    font-family: var(--rom-mono);
+    font-size: 0.76rem;
+    font-weight: 500;
+    color: var(--rom-muted) !important;
+    padding: 0.65rem 0.9rem;
+    opacity: 1 !important;
+    transition: color 0.12s ease;
+}
+
+.md-tabs__link:hover {
+    color: var(--rom-text-bright) !important;
+}
+
+.md-tabs__item--active .md-tabs__link {
+    color: var(--rom-accent) !important;
+    border-bottom: 2px solid var(--rom-accent);
+}
+
 /* ==========================================================================
-   4. Sidebar: Code-Editor Tree Navigation
+   4. Sidebar: Clean Navigation Tree (NO Circles / Bullets)
    ========================================================================== */
 .md-sidebar--primary {
     background-color: var(--rom-bg);
     border-right: 1px solid var(--rom-border);
 }
 
-/* Hide the repetitive title in the sidebar */
-.md-sidebar--primary .md-nav__title {
-    display: none;
+/* Completely remove circle pseudo-elements everywhere */
+.md-sidebar--primary .md-nav__link::before,
+.md-sidebar--secondary .md-nav__link::before,
+.md-nav__link::before {
+    display: none !important;
+    content: none !important;
 }
 
-/* Nav Item Styling */
 .md-sidebar--primary .md-nav__item .md-nav__link {
     font-family: var(--rom-mono);
-    font-size: 0.75rem;
+    font-size: 0.76rem;
     color: var(--rom-muted);
     padding: 0.35rem 0.75rem;
     border-radius: 3px;
@@ -273,38 +200,19 @@ html {
     font-weight: 600;
 }
 
-/* Section Labels (e.g. DEVICES, GETTING STARTED) */
-.md-sidebar--primary .md-nav__item--section > .md-nav__link {
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--rom-dim) !important;
-    font-weight: 700;
-    padding-top: 1rem;
-    border-left: none !important;
-    background-color: transparent !important;
-}
-
-/* Nested Sub-levels (Device Info, Downloads, Installation) */
+/* Indented guide rules for sub-levels */
 .md-sidebar--primary .md-nav[data-md-level="2"] {
     border-left: 1px solid var(--rom-border);
     margin-left: 0.75rem;
-    padding-left: 0.4rem;
+    padding-left: 0.5rem;
 }
 
 .md-sidebar--primary .md-nav[data-md-level="2"] .md-nav__link {
     font-size: 0.72rem;
-    padding-left: 0.65rem !important;
+    padding-left: 0.5rem !important;
 }
 
-/* Ensure absolutely no circle bullets or pseudo bullets exist */
-.md-sidebar--primary .md-nav__link::before,
-.md-sidebar--secondary .md-nav__link::before {
-    display: none !important;
-    content: none !important;
-}
-
-/* Right Sidebar (Table of Contents) */
+/* Table of Contents (Right Sidebar) */
 .md-sidebar--secondary {
     border-left: 1px solid var(--rom-border);
 }
@@ -337,7 +245,177 @@ html {
 }
 
 /* ==========================================================================
-   5. Homepage Hero & Device Grid
+   5. Compact Live ROM Cards
+   ========================================================================== */
+.live-rom-card {
+    border-top: 1px solid var(--rom-border);
+    padding: 1.25rem 0;
+    margin-bottom: 0.5rem;
+    position: relative;
+    background: transparent;
+}
+
+.live-rom-card:first-of-type {
+    border-top: none;
+}
+
+.live-rom-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+}
+
+.live-rom-card-title {
+    font-family: var(--rom-mono);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--rom-text-bright);
+}
+
+.live-rom-card-subtitle {
+    font-family: var(--rom-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--rom-accent);
+    background: var(--rom-accent-dim);
+    border: 1px solid rgba(0, 188, 212, 0.25);
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.live-rom-card-info-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 0.5rem 0;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.live-rom-card-info-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.live-rom-card-label {
+    font-family: var(--rom-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--rom-muted);
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.live-rom-card-filename {
+    font-family: var(--rom-mono);
+    font-size: 0.85rem;
+    color: var(--rom-text);
+    word-break: break-all;
+}
+
+.live-rom-card-value {
+    font-family: var(--rom-mono);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--rom-text-bright);
+}
+
+.live-rom-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Technical Buttons */
+.md-typeset .md-button {
+    font-family: var(--rom-mono);
+    font-size: 0.74rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.4em 1em;
+    border-radius: 3px;
+    border: 1px solid var(--rom-border-subtle);
+    background-color: var(--rom-surface);
+    color: var(--rom-text);
+    transition: all 0.12s ease;
+}
+
+.md-typeset .md-button:hover {
+    border-color: var(--rom-accent);
+    color: var(--rom-accent);
+    background-color: var(--rom-surface-hover);
+}
+
+.md-typeset .md-button--primary {
+    background-color: var(--rom-accent) !important;
+    border-color: var(--rom-accent) !important;
+    color: #0d1117 !important;
+    font-weight: 700 !important;
+}
+
+.md-typeset .md-button--primary:hover {
+    background-color: #26c6da !important;
+    border-color: #26c6da !important;
+    color: #0d1117 !important;
+}
+
+/* Subtle Shimmer & Compact Spinner */
+.shimmer {
+    color: transparent;
+    background: linear-gradient(
+        100deg,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0) 60%
+    ) var(--rom-surface);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: 3px;
+}
+
+@keyframes shimmer {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
+
+.live-rom-card-loader {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-bottom-color: var(--rom-accent);
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 0.8s linear infinite;
+}
+
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Expandable Changelog View */
+.dynamic-view-container {
+    margin-top: 0.75rem;
+    padding: 1rem 1.25rem;
+    background-color: var(--rom-surface);
+    border: 1px solid var(--rom-border);
+    border-left: 3px solid var(--rom-accent);
+    border-radius: 3px;
+    font-size: 0.85em;
+    color: var(--rom-text);
+}
+
+/* ==========================================================================
+   6. Homepage Device Grid
    ========================================================================== */
 .rom-hero {
     padding: 1.5rem 0 1.25rem;
@@ -368,7 +446,6 @@ html {
     line-height: 1.5;
 }
 
-/* Device Selector Grid */
 .rom-device-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -443,191 +520,9 @@ html {
 
 .rom-device-card__links {
     display: flex;
-    gap: 0.4rem;
+    gap: 0.5rem;
     margin-top: auto;
     flex-wrap: wrap;
-}
-
-/* ==========================================================================
-   6. Terminal-Row ROM Download Cards & Buttons
-   ========================================================================== */
-.rom-card-list {
-    border: 1px solid var(--rom-border);
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 1.5rem 0 2rem;
-    background: var(--rom-surface);
-}
-
-.live-rom-card {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--rom-border);
-    background: var(--rom-surface);
-    transition: background-color 0.12s ease;
-    position: relative;
-}
-
-.live-rom-card:last-child {
-    border-bottom: none;
-}
-
-.live-rom-card:hover {
-    background-color: var(--rom-surface-hover);
-}
-
-@media screen and (max-width: 650px) {
-    .live-rom-card {
-        grid-template-columns: 1fr;
-        gap: 0.85rem;
-    }
-}
-
-.live-rom-card-left {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-}
-
-.live-rom-card-title-row {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-}
-
-.live-rom-card-name {
-    font-family: var(--rom-mono);
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--rom-text-bright);
-}
-
-.live-rom-card-badge {
-    font-family: var(--rom-mono);
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--rom-accent);
-    background: var(--rom-accent-dim);
-    border: 1px solid rgba(0, 188, 212, 0.25);
-    padding: 0.12rem 0.45rem;
-    border-radius: 2px;
-}
-
-.live-rom-card-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    font-size: 0.75rem;
-    color: var(--rom-muted);
-    font-family: var(--rom-mono);
-}
-
-.live-rom-card-filename {
-    color: #adb5bd;
-    word-break: break-all;
-}
-
-.live-rom-card-actions {
-    display: flex;
-    gap: 0.4rem;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-/* Sleek Technical Buttons */
-.rom-btn {
-    font-family: var(--rom-mono);
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 0.35rem 0.75rem;
-    border-radius: 3px;
-    text-decoration: none !important;
-    border: 1px solid var(--rom-border-subtle);
-    color: var(--rom-text) !important;
-    background: var(--rom-bg);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.12s ease;
-    line-height: 1.4;
-}
-
-.rom-btn:hover {
-    border-color: var(--rom-accent);
-    color: var(--rom-accent) !important;
-    background-color: var(--rom-surface);
-}
-
-.rom-btn--primary {
-    background: var(--rom-accent) !important;
-    color: #0d1117 !important;
-    border-color: var(--rom-accent) !important;
-    font-weight: 700;
-}
-
-.rom-btn--primary:hover {
-    background: #26c6da !important;
-    border-color: #26c6da !important;
-    color: #0d1117 !important;
-}
-
-/* Subtle Shimmer & Loader */
-.shimmer {
-    color: transparent;
-    background: linear-gradient(
-        100deg,
-        rgba(255, 255, 255, 0) 40%,
-        rgba(255, 255, 255, 0.05) 50%,
-        rgba(255, 255, 255, 0) 60%
-    ) var(--rom-bg);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite linear;
-    border-radius: 2px;
-}
-
-@keyframes shimmer {
-    0% { background-position: 100% 0; }
-    100% { background-position: -100% 0; }
-}
-
-.live-rom-card-loader {
-    width: 14px;
-    height: 14px;
-    border: 2px solid rgba(255, 255, 255, 0.15);
-    border-bottom-color: var(--rom-accent);
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 0.8s linear infinite;
-}
-
-@keyframes rotation {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Inline Expandable Changelog */
-.dynamic-view-container {
-    grid-column: 1 / -1;
-    width: 100%;
-    background: var(--rom-bg);
-    border: 1px solid var(--rom-border);
-    border-left: 3px solid var(--rom-accent);
-    border-radius: 3px;
-    padding: 1rem 1.25rem;
-    margin-top: 0.75rem;
-    font-size: 0.85rem;
-    color: var(--rom-text);
 }
 
 /* ==========================================================================
@@ -672,7 +567,6 @@ html {
     padding: 0;
 }
 
-/* Pre / Code Blocks */
 .md-typeset pre {
     background-color: var(--rom-surface) !important;
     border: 1px solid var(--rom-border);
@@ -681,7 +575,6 @@ html {
     font-size: 0.82rem;
 }
 
-/* Clean Tables */
 .md-typeset table:not([class]) {
     font-size: 0.82rem;
     border: 1px solid var(--rom-border);
@@ -707,7 +600,6 @@ html {
     padding: 0.6rem 0.9rem;
 }
 
-/* Material Admonitions */
 .md-typeset .admonition {
     background-color: var(--rom-surface) !important;
     border: 1px solid var(--rom-border) !important;

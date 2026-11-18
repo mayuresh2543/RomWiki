@@ -51,29 +51,27 @@ function initRomWiki() {
                     const isLineage = (fileInfo.filename && fileInfo.filename.includes('lineage-'));
                     const bootUrl = downloadUrl ? downloadUrl.substring(0, downloadUrl.lastIndexOf('/') + 1) + 'boot.img' : '';
                     const buttonsHtml = isLineage ? `
-                        <a href="${downloadUrl}" target="_blank" class="rom-btn rom-btn--primary" style="margin-top:0.75rem; margin-right:0.4rem;">ROM</a>
-                        <a href="${bootUrl}" target="_blank" class="rom-btn" style="margin-top:0.75rem;">Boot</a>
+                        <a href="${downloadUrl}" target="_blank" class="md-button md-button--primary" style="margin-top:1rem; margin-right:0.5rem;">ROM</a>
+                        <a href="${bootUrl}" target="_blank" class="md-button" style="margin-top:1rem;">Boot</a>
                     ` : `
-                        <a href="${downloadUrl}" target="_blank" class="rom-btn rom-btn--primary" style="margin-top:0.75rem;">Download ROM</a>
+                        <a href="${downloadUrl}" target="_blank" class="md-button md-button--primary" style="margin-top:1rem;">Download ROM</a>
                     `;
                     viewContainer.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid var(--rom-border); padding-bottom: 0.5rem;">
-                            <strong style="font-family: var(--rom-mono); font-size: 0.8rem; text-transform: uppercase; color: var(--rom-accent);">Build Information</strong>
-                            <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; font-size:1.2em; color:var(--rom-muted);">&times;</button>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid var(--rom-border); padding-bottom: 0.5rem;">
+                            <strong>Build Information</strong>
+                            <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; font-size:1.5em; color:var(--rom-muted);">&times;</button>
                         </div>
-                        <div style="font-family: var(--rom-mono); font-size: 0.78rem; line-height: 1.6;">
-                            <div><strong style="color:var(--rom-muted);">File:</strong> ${fileInfo.filename || 'Unknown'}</div>
-                            <div><strong style="color:var(--rom-muted);">Size:</strong> ${sizeMB} MB</div>
-                            <div><strong style="color:var(--rom-muted);">Version:</strong> ${version}</div>
-                        </div>
+                        <div><strong>File:</strong> ${fileInfo.filename || 'Unknown'}</div>
+                        <div><strong>Size:</strong> ${sizeMB} MB</div>
+                        <div><strong>Version:</strong> ${version}</div>
                         ${buttonsHtml}
                     `;
                 } else if (href.endsWith('.md') || href.endsWith('.txt')) {
                     const text = await response.text();
                     viewContainer.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid var(--rom-border); padding-bottom: 0.5rem;">
-                            <strong style="font-family: var(--rom-mono); font-size: 0.8rem; text-transform: uppercase; color: var(--rom-accent);">${link.textContent}</strong>
-                            <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; font-size:1.2em; color:var(--rom-muted);">&times;</button>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid var(--rom-border); padding-bottom: 0.5rem;">
+                            <strong>${link.textContent}</strong>
+                            <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; font-size:1.5em; color:var(--rom-muted);">&times;</button>
                         </div>
                         <div class="md-typeset" style="font-size: 0.85em;">${marked.parse(text)}</div>
                     `;
@@ -82,12 +80,12 @@ function initRomWiki() {
                     viewContainer.remove();
                 }
             } catch (error) {
-                viewContainer.innerHTML = `<div style="color: #f85149; font-size: 0.8rem;">Failed to fetch content: ${error.message}</div>`;
+                viewContainer.innerHTML = `<div style="color: #ef4444;">Failed to fetch content: ${error.message}</div>`;
             }
         });
     });
 
-    // 2. Initialize Terminal-Row Live ROM Cards
+    // 2. Initialize Live ROM Cards
     const liveCards = document.querySelectorAll('.live-rom-card');
     liveCards.forEach(async (card) => {
         // Prevent duplicate loads
@@ -102,15 +100,13 @@ function initRomWiki() {
 
         // Initial skeleton state
         card.innerHTML = `
-            <div class="live-rom-card-left">
-                <div class="live-rom-card-title-row">
-                    <span class="live-rom-card-name">${title}</span>
-                    <span class="live-rom-card-badge">${subtitle}</span>
-                    <div class="live-rom-card-loader"></div>
-                </div>
-                <div class="live-rom-card-meta shimmer" style="height: 14px; width: 200px; margin-top: 4px;"></div>
+            <div class="live-rom-card-header">
+                <span class="live-rom-card-title">${title}</span>
+                <span class="live-rom-card-subtitle">${subtitle}</span>
+                <div class="live-rom-card-loader" style="margin-left:auto;"></div>
             </div>
-            <div class="live-rom-card-actions shimmer" style="height: 28px; width: 180px;"></div>
+            <div class="live-rom-card-info-container shimmer" style="height: 38px;"></div>
+            <div class="live-rom-card-actions shimmer" style="height: 32px; width: 220px; border-radius: 0.2rem;"></div>
         `;
 
         try {
@@ -144,12 +140,12 @@ function initRomWiki() {
             let downloadButtonsHtml = '';
             if (isLineage) {
                 downloadButtonsHtml = `
-                    <a href="${downloadUrl}" class="rom-btn rom-btn--primary" target="_blank" rel="noopener">ROM</a>
-                    <a href="${bootUrl}" class="rom-btn" target="_blank" rel="noopener">Boot</a>
+                    <a href="${downloadUrl}" class="md-button md-button--primary" target="_blank" rel="noopener">ROM</a>
+                    <a href="${bootUrl}" class="md-button" target="_blank" rel="noopener">Boot</a>
                 `;
             } else {
                 downloadButtonsHtml = `
-                    <a href="${downloadUrl}" class="rom-btn rom-btn--primary" target="_blank" rel="noopener">Download</a>
+                    <a href="${downloadUrl}" class="md-button md-button--primary" target="_blank" rel="noopener">Download</a>
                 `;
             }
 
@@ -157,25 +153,30 @@ function initRomWiki() {
 
             // Render loaded state
             card.innerHTML = `
-                <div class="live-rom-card-left">
-                    <div class="live-rom-card-title-row">
-                        <span class="live-rom-card-name">${title}</span>
-                        <span class="live-rom-card-badge">${subtitle}</span>
-                    </div>
-                    <div class="live-rom-card-meta">
+                <div class="live-rom-card-header">
+                    <span class="live-rom-card-title">${title}</span>
+                    <span class="live-rom-card-subtitle">${subtitle}</span>
+                </div>
+                <div class="live-rom-card-info-container">
+                    <div class="live-rom-card-info-col" style="flex: 2; min-width: 200px;">
+                        <span class="live-rom-card-label">Latest Build</span>
                         <span class="live-rom-card-filename">${filename}</span>
-                        <span>·</span>
-                        <span>${sizeMB} MB</span>
-                        <span>·</span>
-                        <span>v${version}</span>
+                    </div>
+                    <div class="live-rom-card-info-col">
+                        <span class="live-rom-card-label">Size</span>
+                        <span class="live-rom-card-value">${sizeMB} MB</span>
+                    </div>
+                    <div class="live-rom-card-info-col">
+                        <span class="live-rom-card-label">Version</span>
+                        <span class="live-rom-card-value">${version}</span>
                     </div>
                 </div>
                 <div class="live-rom-card-actions">
                     ${downloadButtonsHtml}
-                    <button class="rom-btn changelog-btn" type="button">Notes</button>
-                    <a href="${installUrl}" class="rom-btn">Guide</a>
+                    <button class="md-button changelog-btn" type="button">Changelog</button>
+                    <a href="${installUrl}" class="md-button">Install Guide</a>
                 </div>
-                <div class="dynamic-view-container" style="display:none;"></div>
+                <div class="dynamic-view-container" style="display:none; margin-top:0.75rem;"></div>
             `;
 
             // Attach changelog listener
@@ -187,45 +188,50 @@ function initRomWiki() {
                     return;
                 }
                 viewContainer.style.display = 'block';
-                viewContainer.innerHTML = '<div style="font-family: var(--rom-mono); font-size: 0.8rem; color: var(--rom-muted);">Fetching release notes...</div>';
+                viewContainer.innerHTML = '<div>Fetching changelog...</div>';
                 try {
                     const clRes = await fetch(changelogUrl);
                     const clText = await clRes.text();
                     viewContainer.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--rom-border); padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
-                            <strong style="font-family: var(--rom-mono); font-size: 0.8rem; text-transform: uppercase; color: var(--rom-accent);">${title} Release Notes</strong>
-                            <button onclick="this.parentElement.parentElement.style.display='none'" style="background:none; border:none; cursor:pointer; font-size:1.2em; color: var(--rom-muted);">&times;</button>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--rom-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                            <strong>Release Notes</strong>
+                            <button onclick="this.parentElement.parentElement.style.display='none'" style="background:none; border:none; cursor:pointer; font-size:1.5em; color:var(--rom-muted);">&times;</button>
                         </div>
-                        <div class="md-typeset" style="font-size: 0.82em;">${marked.parse(clText)}</div>
+                        <div class="md-typeset" style="font-size: 0.85em;">${marked.parse(clText)}</div>
                     `;
                 } catch (e) {
-                    viewContainer.innerHTML = '<div style="color: #f85149; font-size: 0.8rem;">Failed to fetch changelog.</div>';
+                    viewContainer.innerHTML = '<div style="color: #ef4444;">Failed to fetch changelog.</div>';
                 }
             });
 
         } catch (error) {
-            // Render error state
+            // Render error state with fallback download button if available
+            const fallbackLink = fallbackDlUrl ? `<a href="${fallbackDlUrl}" class="md-button md-button--primary" target="_blank" rel="noopener">Manual Download</a>` : '';
             card.innerHTML = `
-                <div class="live-rom-card-left">
-                    <div class="live-rom-card-title-row">
-                        <span class="live-rom-card-name">${title}</span>
-                        <span class="live-rom-card-badge">${subtitle}</span>
-                    </div>
-                    <div class="live-rom-card-meta" style="color: #f85149;">
-                        <span>Failed to fetch build information: ${error.message}</span>
-                    </div>
+                <div class="live-rom-card-header">
+                    <span class="live-rom-card-title">${title}</span>
+                    <span class="live-rom-card-subtitle">${subtitle}</span>
                 </div>
-                <div class="live-rom-card-actions">
-                    <a href="${installUrl}" class="rom-btn">Guide</a>
+                <div class="live-rom-card-info-container">
+                    <div style="color: #ef4444; font-weight: 600; font-size: 0.85rem;">Failed to fetch latest build info</div>
+                    <div style="font-size: 0.75rem; opacity: 0.7;">${error.message}</div>
+                </div>
+                <div class="live-rom-card-actions" style="margin-top: 0.5rem;">
+                    ${fallbackLink}
+                    <a href="${installUrl}" class="md-button">Install Guide</a>
                 </div>
             `;
         }
     });
 }
 
-// Support both instant navigation and initial page load
+// Immediate execution on page load + subscribe to route changes
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRomWiki);
+} else {
+    initRomWiki();
+}
+
 if (typeof document$ !== 'undefined') {
     document$.subscribe(initRomWiki);
-} else {
-    document.addEventListener('DOMContentLoaded', initRomWiki);
 }
