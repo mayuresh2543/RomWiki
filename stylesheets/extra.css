@@ -1,52 +1,68 @@
 /* ==========================================================================
-   ROM.WIKI — Technical Documentation Design System
+   ROM.WIKI — Pure Terminal / TUI Design System
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
 
 /* ==========================================================================
-   1. Design Tokens & Palette (High-Contrast Slate/Dark)
+   1. Universal Monospace & Terminal Color Tokens
    ========================================================================== */
+*,
+body,
+button,
+input,
+select,
+textarea,
+.md-typeset,
+.md-nav,
+.md-header,
+.md-tabs {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+}
+
 :root,
 [data-md-color-scheme="slate"] {
-    --md-default-bg-color: #0d1117;
-    --md-default-bg-color--light: #161b22;
-    --md-default-bg-color--lighter: #21262d;
-    --md-default-bg-color--lightest: #30363d;
+    /* True Terminal Dark Palette (Alacritty / OLED Dark) */
+    --md-default-bg-color: #080b0f;
+    --md-default-bg-color--light: #0f141c;
+    --md-default-bg-color--lighter: #161d28;
+    --md-default-bg-color--lightest: #1e2634;
     --md-default-fg-color: #c9d1d9;
-    --md-default-fg-color--light: #8b949e;
-    --md-default-fg-color--lighter: #6e7681;
-    --md-default-fg-color--lightest: #484f58;
+    --md-default-fg-color--light: #768390;
+    --md-default-fg-color--lighter: #545d68;
+    --md-default-fg-color--lightest: #373e47;
 
     --md-primary-fg-color: #000000;
-    --md-primary-bg-color: #0d1117;
+    --md-primary-bg-color: #080b0f;
 
     --md-accent-fg-color: #00bcd4;
     --md-accent-fg-color--transparent: rgba(0, 188, 212, 0.12);
     --md-typeset-a-color: #00bcd4;
 
-    --md-code-bg-color: #161b22;
+    --md-code-bg-color: #0f141c;
     --md-code-fg-color: #c9d1d9;
 
-    /* Custom Technical Tokens */
-    --rom-bg: #0d1117;
-    --rom-surface: #161b22;
-    --rom-surface-hover: #1f242c;
-    --rom-border: #21262d;
-    --rom-border-subtle: #30363d;
-    --rom-text: #c9d1d9;
-    --rom-text-bright: #f0f6fc;
-    --rom-muted: #8b949e;
-    --rom-dim: #6e7681;
+    /* Custom TUI Tokens */
+    --rom-bg: #080b0f;
+    --rom-surface: #0f141c;
+    --rom-surface-elevated: #161d28;
+    --rom-border: #1e2634;
+    --rom-border-subtle: #2d384d;
     --rom-accent: #00bcd4;
     --rom-accent-dim: rgba(0, 188, 212, 0.12);
     --rom-accent-border: rgba(0, 188, 212, 0.35);
+    --rom-green: #3fb950;
+    --rom-yellow: #e3b341;
+    --rom-red: #f85149;
+    --rom-text: #c9d1d9;
+    --rom-text-bright: #f0f6fc;
+    --rom-muted: #768390;
+    --rom-dim: #485263;
 
     --rom-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    --rom-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Enforce flat surfaces without box shadows */
+/* Enforce pure flat surfaces without drop shadows */
 .md-header,
 .md-tabs,
 .md-sidebar,
@@ -61,7 +77,6 @@
 }
 
 body {
-    font-family: var(--rom-sans);
     background-color: var(--rom-bg);
     color: var(--rom-text);
 }
@@ -70,107 +85,169 @@ html {
     scrollbar-gutter: stable;
 }
 
-/* ==========================================================================
-   2. Layout & Grid Width Stabilization
-   ========================================================================== */
-@media screen and (min-width: 60em) {
-    .md-sidebar--primary {
-        width: 17rem !important;
-    }
-}
-
-@media screen and (min-width: 76.25em) {
-    .md-sidebar--primary {
-        width: 17rem !important;
-    }
-
-    .md-sidebar--secondary[hidden] {
-        display: block !important;
-        visibility: hidden !important;
-    }
-
-    .md-grid {
-        max-width: 72rem;
-    }
+/* High-contrast terminal text selection */
+::selection {
+    background-color: var(--rom-accent) !important;
+    color: #080b0f !important;
 }
 
 /* ==========================================================================
-   3. Native Header & Horizontal Tabs (LineageOS Wiki Style)
+   2. Terminal Window Chrome Header
    ========================================================================== */
 .md-header {
     background-color: var(--rom-bg) !important;
     border-bottom: 1px solid var(--rom-border);
+    height: 52px;
+}
+
+.md-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0 1rem;
+    height: 100%;
+}
+
+/* Terminal Window Traffic Light Dots (Red, Yellow, Green) */
+@media screen and (min-width: 60em) {
+    .md-header__inner::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #ff5f56;
+        box-shadow: 16px 0 0 #ffbd2e, 32px 0 0 #27c93f;
+        margin-right: 36px;
+        flex-shrink: 0;
+    }
+}
+
+.md-header__button.md-logo {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+    width: 22px;
+    height: 22px;
+    display: block;
 }
 
 .md-header__title {
-    font-family: var(--rom-mono);
-    font-size: 0.88rem;
+    margin-left: 0.35rem !important;
+    font-size: 0.85rem;
     font-weight: 700;
     color: var(--rom-text-bright);
     letter-spacing: -0.01em;
 }
 
-.md-header__button.md-logo img,
-.md-header__button.md-logo svg {
-    width: 26px;
-    height: 26px;
+/* Blinking Terminal Block Cursor */
+.md-header__topic:first-child .md-ellipsis::after {
+    content: " █";
+    color: var(--rom-accent);
+    font-weight: 400;
+    animation: term-cursor 1s infinite steps(2, start);
 }
 
-.md-header__source {
-    color: var(--rom-muted);
+@keyframes term-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
-.md-header__source:hover {
-    color: var(--rom-text-bright);
-}
-
-/* Search Box Customization */
+/* Search Box Styled as CLI Input */
 .md-search__inner {
     background-color: var(--rom-surface) !important;
     border: 1px solid var(--rom-border) !important;
-    border-radius: 4px;
+    border-radius: 3px !important;
 }
 
 .md-search__input {
-    font-family: var(--rom-mono) !important;
-    font-size: 0.8rem !important;
+    font-size: 0.78rem !important;
     color: var(--rom-text-bright) !important;
 }
 
-/* Horizontal Tabs Bar */
+.md-search__input::placeholder {
+    color: var(--rom-muted) !important;
+}
+
+/* Completely remove GitHub repository link from header */
+.md-header__source {
+    display: none !important;
+}
+
+/* ==========================================================================
+   3. Tmux / Zellij Statusline Navigation Tabs (.md-tabs)
+   ========================================================================== */
 .md-tabs {
     background-color: var(--rom-surface) !important;
     border-bottom: 1px solid var(--rom-border);
+    height: 38px;
+}
+
+.md-tabs__list {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0 1rem;
+    height: 100%;
+}
+
+.md-tabs__item {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 .md-tabs__link {
-    font-family: var(--rom-mono);
-    font-size: 0.76rem;
+    font-size: 0.72rem;
     font-weight: 500;
     color: var(--rom-muted) !important;
-    padding: 0.65rem 0.9rem;
+    padding: 0.25rem 0.65rem !important;
+    border: 1px solid var(--rom-border);
+    border-radius: 2px;
+    background-color: var(--rom-bg);
     opacity: 1 !important;
-    transition: color 0.12s ease;
+    transition: all 0.12s ease;
+    display: inline-flex;
+    align-items: center;
 }
 
 .md-tabs__link:hover {
     color: var(--rom-text-bright) !important;
+    border-color: var(--rom-accent);
 }
 
+/* Active Tmux Window: Inverted Solid Cyan Block */
 .md-tabs__item--active .md-tabs__link {
-    color: var(--rom-accent) !important;
-    border-bottom: 2px solid var(--rom-accent);
+    background-color: var(--rom-accent) !important;
+    color: #080b0f !important;
+    font-weight: 700 !important;
+    border-color: var(--rom-accent) !important;
+}
+
+/* Right-side Terminal Status Indicators on Desktop */
+@media screen and (min-width: 60em) {
+    .md-tabs__list::after {
+        content: "[UTF-8 // OTA:ONLINE]";
+        margin-left: auto;
+        font-size: 0.68rem;
+        color: var(--rom-green);
+        font-weight: 600;
+        letter-spacing: 0.06em;
+    }
 }
 
 /* ==========================================================================
-   4. Sidebar: Clean Navigation Tree (NO Circles / Bullets)
+   4. CLI `tree` Navigation Sidebar (Primary Sidebar)
    ========================================================================== */
 .md-sidebar--primary {
     background-color: var(--rom-bg);
     border-right: 1px solid var(--rom-border);
 }
 
-/* Completely remove circle pseudo-elements everywhere */
+/* Suppress all circle pseudo-elements */
 .md-sidebar--primary .md-nav__link::before,
 .md-sidebar--secondary .md-nav__link::before,
 .md-nav__link::before {
@@ -179,11 +256,10 @@ html {
 }
 
 .md-sidebar--primary .md-nav__item .md-nav__link {
-    font-family: var(--rom-mono);
     font-size: 0.76rem;
     color: var(--rom-muted);
-    padding: 0.35rem 0.75rem;
-    border-radius: 3px;
+    padding: 0.32rem 0.75rem;
+    border-radius: 2px;
     border-left: 2px solid transparent;
     transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
@@ -193,14 +269,15 @@ html {
     background-color: var(--rom-surface);
 }
 
+/* Active Navigation Item */
 .md-sidebar--primary .md-nav__item .md-nav__link--active {
     color: var(--rom-accent) !important;
     background-color: var(--rom-accent-dim) !important;
     border-left: 2px solid var(--rom-accent) !important;
-    font-weight: 600;
+    font-weight: 700;
 }
 
-/* Indented guide rules for sub-levels */
+/* Tree Guide Rules for Sub-levels */
 .md-sidebar--primary .md-nav[data-md-level="2"] {
     border-left: 1px solid var(--rom-border);
     margin-left: 0.75rem;
@@ -218,16 +295,14 @@ html {
 }
 
 .md-sidebar--secondary .md-nav__title {
-    font-family: var(--rom-mono);
     font-size: 0.68rem;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     color: var(--rom-dim);
     font-weight: 700;
 }
 
 .md-sidebar--secondary .md-nav__link {
-    font-family: var(--rom-mono);
     font-size: 0.72rem;
     color: var(--rom-muted);
     padding: 0.25rem 0.5rem;
@@ -245,129 +320,130 @@ html {
 }
 
 /* ==========================================================================
-   5. Compact Live ROM Cards
+   5. ASCII Boxed Live ROM Download Cards (.live-rom-card)
    ========================================================================== */
 .live-rom-card {
-    border-top: 1px solid var(--rom-border);
-    padding: 1.25rem 0;
-    margin-bottom: 0.5rem;
+    border: 1px solid var(--rom-border);
+    border-radius: 3px;
+    background-color: var(--rom-surface);
+    padding: 1.15rem 1.35rem;
+    margin-bottom: 1.25rem;
     position: relative;
-    background: transparent;
+    transition: border-color 0.15s ease;
 }
 
-.live-rom-card:first-of-type {
-    border-top: none;
+.live-rom-card:hover {
+    border-color: var(--rom-accent-border);
 }
 
 .live-rom-card-header {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.6rem;
+    justify-content: space-between;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--rom-border);
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .live-rom-card-title {
-    font-family: var(--rom-mono);
-    font-size: 1.15rem;
+    font-size: 0.95rem;
     font-weight: 700;
-    margin: 0;
     color: var(--rom-text-bright);
+    margin: 0;
 }
 
 .live-rom-card-subtitle {
-    font-family: var(--rom-mono);
     font-size: 0.68rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--rom-accent);
-    background: var(--rom-accent-dim);
-    border: 1px solid rgba(0, 188, 212, 0.25);
+    background-color: var(--rom-accent-dim);
+    border: 1px solid rgba(0, 188, 212, 0.3);
     padding: 0.15rem 0.5rem;
-    border-radius: 3px;
-    display: inline-block;
+    border-radius: 2px;
 }
 
-.live-rom-card-info-container {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-    padding: 0.5rem 0;
-    margin-bottom: 0.75rem;
-    flex-wrap: wrap;
-}
-
-.live-rom-card-info-col {
-    display: flex;
-    flex-direction: column;
-}
-
-.live-rom-card-label {
-    font-family: var(--rom-mono);
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+/* Terminal CLI Lines */
+.term-line {
+    font-size: 0.78rem;
     color: var(--rom-muted);
+    line-height: 1.7;
+}
+
+.term-prompt {
+    color: var(--rom-accent);
     font-weight: 700;
-    margin-bottom: 0.2rem;
+    margin-right: 0.35rem;
 }
 
-.live-rom-card-filename {
-    font-family: var(--rom-mono);
-    font-size: 0.85rem;
-    color: var(--rom-text);
-    word-break: break-all;
-}
-
-.live-rom-card-value {
-    font-family: var(--rom-mono);
-    font-size: 0.88rem;
-    font-weight: 600;
+.term-val {
     color: var(--rom-text-bright);
+    font-weight: 600;
+}
+
+.term-file {
+    color: var(--rom-yellow);
+    word-break: break-all;
 }
 
 .live-rom-card-actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.45rem;
     flex-wrap: wrap;
     align-items: center;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--rom-border);
 }
 
-/* Technical Buttons */
-.md-typeset .md-button {
-    font-family: var(--rom-mono);
-    font-size: 0.74rem;
-    font-weight: 600;
+/* Terminal CLI Hotkey Buttons */
+.term-btn {
+    font-size: 0.72rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 0.4em 1em;
-    border-radius: 3px;
+    letter-spacing: 0.05em;
+    padding: 0.4em 0.85em;
+    border-radius: 2px;
     border: 1px solid var(--rom-border-subtle);
-    background-color: var(--rom-surface);
-    color: var(--rom-text);
+    background-color: var(--rom-bg);
+    color: var(--rom-text) !important;
+    cursor: pointer;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.12s ease;
+    line-height: 1.4;
 }
 
-.md-typeset .md-button:hover {
+.term-btn:hover {
     border-color: var(--rom-accent);
-    color: var(--rom-accent);
-    background-color: var(--rom-surface-hover);
+    color: var(--rom-accent) !important;
+    background-color: var(--rom-surface-elevated);
 }
 
-.md-typeset .md-button--primary {
+.term-btn--primary {
     background-color: var(--rom-accent) !important;
+    color: #080b0f !important;
     border-color: var(--rom-accent) !important;
-    color: #0d1117 !important;
-    font-weight: 700 !important;
 }
 
-.md-typeset .md-button--primary:hover {
+.term-btn--primary:hover {
     background-color: #26c6da !important;
     border-color: #26c6da !important;
-    color: #0d1117 !important;
+    color: #080b0f !important;
 }
 
-/* Subtle Shimmer & Compact Spinner */
+/* Terminal Cycling Spinner & Shimmer */
+.term-spinner {
+    font-size: 0.78rem;
+    color: var(--rom-accent);
+    font-weight: 700;
+}
+
 .shimmer {
     color: transparent;
     background: linear-gradient(
@@ -375,10 +451,10 @@ html {
         rgba(255, 255, 255, 0) 40%,
         rgba(255, 255, 255, 0.05) 50%,
         rgba(255, 255, 255, 0) 60%
-    ) var(--rom-surface);
+    ) var(--rom-bg);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
 @keyframes shimmer {
@@ -386,64 +462,36 @@ html {
     100% { background-position: -100% 0; }
 }
 
-.live-rom-card-loader {
-    width: 14px;
-    height: 14px;
-    border: 2px solid rgba(255, 255, 255, 0.15);
-    border-bottom-color: var(--rom-accent);
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 0.8s linear infinite;
-}
-
-@keyframes rotation {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Expandable Changelog View */
+/* Expandable Terminal Pager (Changelog View) */
 .dynamic-view-container {
-    margin-top: 0.75rem;
+    margin-top: 0.85rem;
     padding: 1rem 1.25rem;
-    background-color: var(--rom-surface);
+    background-color: var(--rom-bg);
     border: 1px solid var(--rom-border);
     border-left: 3px solid var(--rom-accent);
-    border-radius: 3px;
-    font-size: 0.85em;
+    border-radius: 2px;
+    font-size: 0.82em;
     color: var(--rom-text);
 }
 
 /* ==========================================================================
-   6. Homepage Device Grid
+   6. Homepage Hero & Device Selector Panels
    ========================================================================== */
-.rom-hero {
-    padding: 1.5rem 0 1.25rem;
-    border-bottom: 1px solid var(--rom-border);
+.rom-motd-banner {
+    background-color: var(--rom-surface);
+    border: 1px solid var(--rom-border);
+    border-radius: 3px;
+    padding: 1.25rem;
     margin-bottom: 2rem;
 }
 
-.rom-hero__tag {
-    font-family: var(--rom-mono);
-    font-size: 0.8rem;
+.rom-motd-ascii {
+    font-size: 0.75rem;
     color: var(--rom-accent);
-    margin-bottom: 0.4rem;
-    display: inline-block;
-}
-
-.rom-hero__title {
-    font-size: 1.75rem !important;
-    font-weight: 700 !important;
-    color: var(--rom-text-bright) !important;
-    letter-spacing: -0.02em;
-    margin: 0 0 0.5rem 0 !important;
-}
-
-.rom-hero__desc {
-    font-size: 0.95rem;
-    color: var(--rom-muted);
-    margin: 0;
-    line-height: 1.5;
+    line-height: 1.25;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 0 0 1rem 0;
 }
 
 .rom-device-grid {
@@ -456,7 +504,7 @@ html {
 .rom-device-card {
     background: var(--rom-surface);
     border: 1px solid var(--rom-border);
-    border-radius: 4px;
+    border-radius: 3px;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
@@ -475,27 +523,13 @@ html {
 }
 
 .rom-device-card__codename {
-    font-family: var(--rom-mono);
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     color: var(--rom-accent);
-    font-weight: 600;
-}
-
-.rom-badge {
-    font-family: var(--rom-mono);
-    font-size: 0.65rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0.12rem 0.45rem;
-    border-radius: 3px;
-    background: var(--rom-accent-dim);
-    color: var(--rom-accent);
-    border: 1px solid rgba(0, 188, 212, 0.25);
 }
 
 .rom-device-card__name {
-    font-size: 1.05rem !important;
+    font-size: 1rem !important;
     font-weight: 700 !important;
     color: var(--rom-text-bright) !important;
     margin: 0 0 0.75rem 0 !important;
@@ -509,27 +543,26 @@ html {
 }
 
 .rom-device-card__rom-pill {
-    font-family: var(--rom-mono);
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: var(--rom-muted);
     background: var(--rom-bg);
     border: 1px solid var(--rom-border);
-    padding: 0.2rem 0.5rem;
-    border-radius: 3px;
+    padding: 0.18rem 0.45rem;
+    border-radius: 2px;
 }
 
 .rom-device-card__links {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.45rem;
     margin-top: auto;
     flex-wrap: wrap;
 }
 
 /* ==========================================================================
-   7. Typography, Tables & Admonitions
+   7. Typography, Tables & Kernel Syslog Admonitions
    ========================================================================== */
 .md-typeset h1 {
-    font-size: 1.6rem;
+    font-size: 1.55rem;
     font-weight: 700;
     color: var(--rom-text-bright);
     letter-spacing: -0.01em;
@@ -537,8 +570,8 @@ html {
 }
 
 .md-typeset h2 {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.15rem;
+    font-weight: 700;
     color: var(--rom-text-bright);
     border-bottom: 1px solid var(--rom-border);
     padding-bottom: 0.35rem;
@@ -547,16 +580,15 @@ html {
 }
 
 .md-typeset h3 {
-    font-size: 1.05rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 700;
     color: var(--rom-text-bright);
     margin-top: 1.5rem;
 }
 
 .md-typeset code {
-    font-family: var(--rom-mono);
     background-color: rgba(255, 255, 255, 0.06);
-    border-radius: 3px;
+    border-radius: 2px;
     font-size: 0.84em;
     color: var(--rom-text-bright);
     padding: 0.15rem 0.4rem;
@@ -567,56 +599,55 @@ html {
     padding: 0;
 }
 
+/* Pre / Code Blocks Styled as Terminal Output */
 .md-typeset pre {
     background-color: var(--rom-surface) !important;
     border: 1px solid var(--rom-border);
-    border-radius: 4px;
-    font-family: var(--rom-mono);
+    border-radius: 3px;
     font-size: 0.82rem;
 }
 
+/* Clean Terminal Matrix Tables */
 .md-typeset table:not([class]) {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     border: 1px solid var(--rom-border);
-    border-radius: 4px;
+    border-radius: 3px;
     overflow: hidden;
     background-color: var(--rom-surface);
 }
 
 .md-typeset table:not([class]) th {
     background-color: rgba(255, 255, 255, 0.03);
-    font-family: var(--rom-mono);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     color: var(--rom-muted);
-    font-weight: 600;
+    font-weight: 700;
     border-bottom: 1px solid var(--rom-border);
-    padding: 0.6rem 0.9rem;
+    padding: 0.55rem 0.85rem;
 }
 
 .md-typeset table:not([class]) td {
     border-bottom: 1px solid var(--rom-border);
-    padding: 0.6rem 0.9rem;
+    padding: 0.55rem 0.85rem;
 }
 
+/* Terminal Log Admonitions */
 .md-typeset .admonition {
     background-color: var(--rom-surface) !important;
     border: 1px solid var(--rom-border) !important;
-    border-left: 3px solid var(--md-accent-fg-color) !important;
-    border-radius: 4px !important;
-    font-size: 0.85rem;
+    border-radius: 3px !important;
+    font-size: 0.82rem;
 }
 
 .md-typeset .admonition__title {
-    font-family: var(--rom-mono) !important;
-    font-size: 0.78rem !important;
+    font-size: 0.74rem !important;
     font-weight: 700 !important;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     background-color: transparent !important;
     border-bottom: 1px solid var(--rom-border) !important;
-    padding: 0.5rem 0.9rem !important;
+    padding: 0.45rem 0.85rem !important;
 }
 
 .md-typeset .admonition__title::before {
@@ -624,5 +655,29 @@ html {
 }
 
 .md-typeset .admonition__content {
-    padding: 0.75rem 0.9rem !important;
+    padding: 0.75rem 0.85rem !important;
+}
+
+/* Warning Callout */
+.md-typeset .admonition.warning {
+    border-left: 3px solid var(--rom-red) !important;
+}
+.md-typeset .admonition.warning .admonition__title {
+    color: var(--rom-red) !important;
+}
+
+/* Note Callout */
+.md-typeset .admonition.note {
+    border-left: 3px solid var(--rom-accent) !important;
+}
+.md-typeset .admonition.note .admonition__title {
+    color: var(--rom-accent) !important;
+}
+
+/* Tip Callout */
+.md-typeset .admonition.tip {
+    border-left: 3px solid var(--rom-green) !important;
+}
+.md-typeset .admonition.tip .admonition__title {
+    color: var(--rom-green) !important;
 }
