@@ -1,4 +1,4 @@
-// ROM.WIKI — Terminal TUI Dynamic ROM Cards & Content Loader
+// ROM.WIKI — Dynamic ROM Cards & Content Loader
 
 function initRomWiki() {
     // 1. Intercept standard github raw links (Legacy behavior)
@@ -22,7 +22,7 @@ function initRomWiki() {
             }
             const viewContainer = document.createElement('div');
             viewContainer.className = 'dynamic-view-container';
-            viewContainer.innerHTML = '<div><span class="term-prompt">$</span> fetching data...</div>';
+            viewContainer.innerHTML = '<div>Fetching data...</div>';
             link.parentNode.insertBefore(viewContainer, link.nextSibling);
 
             try {
@@ -51,41 +51,41 @@ function initRomWiki() {
                     const isLineage = (fileInfo.filename && fileInfo.filename.includes('lineage-'));
                     const bootUrl = downloadUrl ? downloadUrl.substring(0, downloadUrl.lastIndexOf('/') + 1) + 'boot.img' : '';
                     const buttonsHtml = isLineage ? `
-                        <a href="${downloadUrl}" target="_blank" class="term-btn term-btn--primary" style="margin-top:0.75rem; margin-right:0.4rem;">[ $ wget rom.zip ]</a>
-                        <a href="${bootUrl}" target="_blank" class="term-btn" style="margin-top:0.75rem;">[ $ wget boot.img ]</a>
+                        <a href="${downloadUrl}" target="_blank" class="md-button md-button--primary" style="margin-top:1rem; margin-right:0.5rem;">ROM</a>
+                        <a href="${bootUrl}" target="_blank" class="md-button" style="margin-top:1rem;">Boot</a>
                     ` : `
-                        <a href="${downloadUrl}" target="_blank" class="term-btn term-btn--primary" style="margin-top:0.75rem;">[ $ wget download ]</a>
+                        <a href="${downloadUrl}" target="_blank" class="md-button md-button--primary" style="margin-top:1rem;">Download ROM</a>
                     `;
                     viewContainer.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid var(--rom-border); padding-bottom: 0.5rem;">
-                            <strong style="color: var(--rom-accent); font-size: 0.78rem;">[ PAGER: build.json ]</strong>
-                            <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; color:var(--rom-muted); font-size:0.9rem;">[q: close]</button>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid var(--rom-border); padding-bottom: 0.5rem;">
+                            <strong>Build Information</strong>
+                            <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; font-size:1.5em; color:var(--rom-muted);">&times;</button>
                         </div>
-                        <div class="term-line"><span class="term-prompt">$</span> package : <span class="term-file">${fileInfo.filename || 'Unknown'}</span></div>
-                        <div class="term-line"><span class="term-prompt">$</span> size    : <span class="term-val">${sizeMB} MB</span></div>
-                        <div class="term-line"><span class="term-prompt">$</span> version : <span class="term-val">${version}</span></div>
+                        <div><strong>File:</strong> ${fileInfo.filename || 'Unknown'}</div>
+                        <div><strong>Size:</strong> ${sizeMB} MB</div>
+                        <div><strong>Version:</strong> ${version}</div>
                         ${buttonsHtml}
                     `;
                 } else if (href.endsWith('.md') || href.endsWith('.txt')) {
                     const text = await response.text();
                     viewContainer.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid var(--rom-border); padding-bottom: 0.5rem;">
-                            <strong style="color: var(--rom-accent); font-size: 0.78rem;">[ PAGER: ${link.textContent} ]</strong>
-                            <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; color:var(--rom-muted); font-size:0.9rem;">[q: close]</button>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid var(--rom-border); padding-bottom: 0.5rem;">
+                            <strong>${link.textContent}</strong>
+                            <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; font-size:1.5em; color:var(--rom-muted);">&times;</button>
                         </div>
-                        <div class="md-typeset" style="font-size: 0.82em;">${marked.parse(text)}</div>
+                        <div class="md-typeset" style="font-size: 0.85em;">${marked.parse(text)}</div>
                     `;
                 } else {
                     window.open(href, '_blank');
                     viewContainer.remove();
                 }
             } catch (error) {
-                viewContainer.innerHTML = `<div style="color: var(--rom-red); font-size: 0.8rem;">[ERR] fetch failed: ${error.message}</div>`;
+                viewContainer.innerHTML = `<div style="color: #ef4444;">Failed to fetch content: ${error.message}</div>`;
             }
         });
     });
 
-    // 2. Initialize Terminal ASCII Live ROM Cards
+    // 2. Initialize Live ROM Cards
     const liveCards = document.querySelectorAll('.live-rom-card');
     liveCards.forEach(async (card) => {
         // Prevent duplicate loads
@@ -97,40 +97,23 @@ function initRomWiki() {
         const changelogUrl = card.getAttribute('data-changelog');
         const installUrl = card.getAttribute('data-install');
         const fallbackDlUrl = card.getAttribute('data-fallback-dl');
-        const manifestName = jsonUrl ? jsonUrl.split('/').pop() : 'ota.json';
 
-        // Initial CLI loading state with spinner
+        // Initial skeleton state
         card.innerHTML = `
             <div class="live-rom-card-header">
-                <span class="live-rom-card-title">[ BUILD: ${title} ]</span>
-                <span class="live-rom-card-subtitle">[ ${subtitle} ]</span>
+                <span class="live-rom-card-title">${title}</span>
+                <span class="live-rom-card-subtitle">${subtitle}</span>
+                <div class="live-rom-card-loader" style="margin-left:auto;"></div>
             </div>
-            <div class="term-line"><span class="term-prompt">$</span> fetching manifest: <span class="term-spinner">[ / ]</span> <span style="opacity:0.7;">${manifestName}</span></div>
-            <div class="shimmer" style="height: 14px; width: 60%; margin: 0.4rem 0;"></div>
-            <div class="shimmer" style="height: 14px; width: 40%; margin-bottom: 0.6rem;"></div>
-            <div class="live-rom-card-actions shimmer" style="height: 28px; width: 220px;"></div>
+            <div class="live-rom-card-info-container shimmer" style="height: 38px;"></div>
+            <div class="live-rom-card-actions shimmer" style="height: 32px; width: 220px; border-radius: 0.2rem;"></div>
         `;
-
-        // Spinner animation loop
-        const spinnerChars = ['[ / ]', '[ - ]', '[ \\ ]', '[ | ]'];
-        let spinIdx = 0;
-        const spinnerElem = card.querySelector('.term-spinner');
-        const spinInterval = setInterval(() => {
-            if (spinnerElem && !card.dataset.loaded) {
-                spinIdx = (spinIdx + 1) % spinnerChars.length;
-                spinnerElem.textContent = spinnerChars[spinIdx];
-            } else {
-                clearInterval(spinInterval);
-            }
-        }, 120);
 
         try {
             const response = await fetch(jsonUrl);
-            if (!response.ok) throw new Error('HTTP ' + response.status);
+            if (!response.ok) throw new Error('Failed to load JSON');
             const data = await response.json();
             
-            clearInterval(spinInterval);
-
             const build = (data.response && Array.isArray(data.response)) ? data.response[0] : (Array.isArray(data) ? data[0] : data);
             const fileInfo = (build.files && Array.isArray(build.files) && build.files[0]) ? build.files[0] : build;
 
@@ -157,33 +140,43 @@ function initRomWiki() {
             let downloadButtonsHtml = '';
             if (isLineage) {
                 downloadButtonsHtml = `
-                    <a href="${downloadUrl}" class="term-btn term-btn--primary" target="_blank" rel="noopener">[ $ wget rom.zip ]</a>
-                    <a href="${bootUrl}" class="term-btn" target="_blank" rel="noopener">[ $ wget boot.img ]</a>
+                    <a href="${downloadUrl}" class="md-button md-button--primary" target="_blank" rel="noopener">ROM</a>
+                    <a href="${bootUrl}" class="md-button" target="_blank" rel="noopener">Boot</a>
                 `;
             } else {
                 downloadButtonsHtml = `
-                    <a href="${downloadUrl}" class="term-btn term-btn--primary" target="_blank" rel="noopener">[ $ wget download ]</a>
+                    <a href="${downloadUrl}" class="md-button md-button--primary" target="_blank" rel="noopener">Download</a>
                 `;
             }
 
             card.dataset.loaded = 'true';
 
-            // Render loaded TUI state
+            // Render loaded state
             card.innerHTML = `
                 <div class="live-rom-card-header">
-                    <span class="live-rom-card-title">[ BUILD: ${title} ]</span>
-                    <span class="live-rom-card-subtitle">[ ${subtitle} ]</span>
+                    <span class="live-rom-card-title">${title}</span>
+                    <span class="live-rom-card-subtitle">${subtitle}</span>
                 </div>
-                <div class="term-line"><span class="term-prompt">$</span> manifest : <span class="term-val" style="color:var(--rom-green)">verified (200 OK)</span></div>
-                <div class="term-line"><span class="term-prompt">$</span> package  : <span class="term-file">${filename}</span></div>
-                <div class="term-line"><span class="term-prompt">$</span> size     : <span class="term-val">${sizeMB} MB</span></div>
-                <div class="term-line"><span class="term-prompt">$</span> version  : <span class="term-val">${version}</span></div>
+                <div class="live-rom-card-info-container">
+                    <div class="live-rom-card-info-col" style="flex: 2; min-width: 200px;">
+                        <span class="live-rom-card-label">Latest Build</span>
+                        <span class="live-rom-card-filename">${filename}</span>
+                    </div>
+                    <div class="live-rom-card-info-col">
+                        <span class="live-rom-card-label">Size</span>
+                        <span class="live-rom-card-value">${sizeMB} MB</span>
+                    </div>
+                    <div class="live-rom-card-info-col">
+                        <span class="live-rom-card-label">Version</span>
+                        <span class="live-rom-card-value">${version}</span>
+                    </div>
+                </div>
                 <div class="live-rom-card-actions">
                     ${downloadButtonsHtml}
-                    <button class="term-btn changelog-btn" type="button">[ $ less notes ]</button>
-                    <a href="${installUrl}" class="term-btn">[ $ ./install.sh ]</a>
+                    <button class="md-button changelog-btn" type="button">Changelog</button>
+                    <a href="${installUrl}" class="md-button">Install Guide</a>
                 </div>
-                <div class="dynamic-view-container" style="display:none;"></div>
+                <div class="dynamic-view-container" style="display:none; margin-top:0.75rem;"></div>
             `;
 
             // Attach changelog listener
@@ -195,36 +188,37 @@ function initRomWiki() {
                     return;
                 }
                 viewContainer.style.display = 'block';
-                viewContainer.innerHTML = '<div class="term-line"><span class="term-prompt">$</span> cat changelog.txt | less...</div>';
+                viewContainer.innerHTML = '<div>Fetching changelog...</div>';
                 try {
                     const clRes = await fetch(changelogUrl);
                     const clText = await clRes.text();
                     viewContainer.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--rom-border); padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
-                            <strong style="color: var(--rom-accent); font-size: 0.78rem;">[ PAGER: ${title} Changelog.txt ]</strong>
-                            <button onclick="this.parentElement.parentElement.style.display='none'" style="background:none; border:none; cursor:pointer; color:var(--rom-muted); font-size:0.9rem;">[q: exit]</button>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--rom-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                            <strong>Release Notes</strong>
+                            <button onclick="this.parentElement.parentElement.style.display='none'" style="background:none; border:none; cursor:pointer; font-size:1.5em; color:var(--rom-muted);">&times;</button>
                         </div>
-                        <div class="md-typeset" style="font-size: 0.82em; line-height: 1.6;">${marked.parse(clText)}</div>
+                        <div class="md-typeset" style="font-size: 0.85em;">${marked.parse(clText)}</div>
                     `;
                 } catch (e) {
-                    viewContainer.innerHTML = '<div style="color: var(--rom-red); font-size: 0.8rem;">[ERR] failed to fetch changelog.</div>';
+                    viewContainer.innerHTML = '<div style="color: #ef4444;">Failed to fetch changelog.</div>';
                 }
             });
 
         } catch (error) {
-            clearInterval(spinInterval);
-            const fallbackLink = fallbackDlUrl ? `<a href="${fallbackDlUrl}" class="term-btn term-btn--primary" target="_blank" rel="noopener">[ $ manual dl ]</a>` : '';
+            // Render error state with fallback download button if available
+            const fallbackLink = fallbackDlUrl ? `<a href="${fallbackDlUrl}" class="md-button md-button--primary" target="_blank" rel="noopener">Manual Download</a>` : '';
             card.innerHTML = `
                 <div class="live-rom-card-header">
-                    <span class="live-rom-card-title">[ BUILD: ${title} ]</span>
-                    <span class="live-rom-card-subtitle">[ ${subtitle} ]</span>
+                    <span class="live-rom-card-title">${title}</span>
+                    <span class="live-rom-card-subtitle">${subtitle}</span>
                 </div>
-                <div class="term-line" style="color: var(--rom-red);">
-                    <span class="term-prompt">[!]</span> ERR: failed to fetch manifest (${error.message})
+                <div class="live-rom-card-info-container">
+                    <div style="color: #ef4444; font-weight: 600; font-size: 0.85rem;">Failed to fetch latest build info</div>
+                    <div style="font-size: 0.75rem; opacity: 0.7;">${error.message}</div>
                 </div>
-                <div class="live-rom-card-actions">
+                <div class="live-rom-card-actions" style="margin-top: 0.5rem;">
                     ${fallbackLink}
-                    <a href="${installUrl}" class="term-btn">[ $ ./install.sh ]</a>
+                    <a href="${installUrl}" class="md-button">Install Guide</a>
                 </div>
             `;
         }
